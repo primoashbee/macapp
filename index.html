@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bootstrap/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bootstrap/css/main.css">
+  <!-- Ionicons -->
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="assets/css/skins/skin-blue.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="../../index2.html"><b>MACSAT | </b>  MOBILE APP</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Enter your Credentials</p>
+
+    <form action="#" method="post" id="target">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Username" id="txtUsername" required="">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Password" id="txtPassword" required="">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat" id="btnSubmit">Sign In</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+   
+
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="assets/js/app.min.js"></script>
+<script src="assets/js/myJs.js"></script>
+<script src="assets/js/stacktable.js"></script>
+<script>
+ $( "#target" ).submit(function( event ) {
+  var user= $('#txtUsername').val()
+  var pass = $('#txtPassword').val()
+    if(!(user=="" || pass=="")){
+      $.ajax({
+        url:server+'login.php',
+        data:{user:user,pass:pass},
+        dataType:'JSON',
+        type:'POST',
+        success:function(data){
+          if(data[0].MSG==0){
+              alert('Username/Password Incorrect')
+
+          }else{
+            var role = data[0].role
+            localStorage.setItem('information',JSON.stringify(data))
+              if(role=="admin"){
+                location.href="admin/index.html"
+              }else if(role=="teacher"){
+                location.href="teacher/index.html"
+              }else if(role=="student"){
+                location.href="student/index.html"
+              }
+          } 
+          
+        }
+      }) 
+    }
+ 
+  event.preventDefault();
+});
+
+</script>
+</body>
+</html>
