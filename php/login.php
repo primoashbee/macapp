@@ -1,8 +1,8 @@
 <?php 
 require "config.php";
 session_start();
-$user = htmlspecialchars($_POST['user']);
-$pass = htmlspecialchars($_POST['pass']);
+$user = mysql_real_escape_string($_POST['user']);
+$pass = mysql_real_escape_string($_POST['pass']);
 $sql="Select * from users where username='".$user."' and passkey='".$pass."'";
 $res = mysqli_query($conn,$sql);
 $json=array();

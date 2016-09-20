@@ -14,8 +14,8 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 		}
 		
 	}elseif($_POST['request']=="create"){
-		$course = htmlspecialchars($_POST['course']);
-		$desc= htmlspecialchars($_POST['desc']);
+		$course = mysql_real_escape_string($_POST['course']);
+		$desc= mysql_real_escape_string($_POST['desc']);
 		$sql="Select * from course where name='$course'";
 		$res = mysqli_query($conn,$sql);
 			if(mysqli_num_rows($res)){
@@ -31,9 +31,9 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 			}
 	
 	}else if($_POST['request']=="update"){
-		$course = htmlspecialchars($_POST['course']);
-		$id = htmlspecialchars($_POST['id']);
-		$desc= htmlspecialchars($_POST['desc']);
+		$course = mysql_real_escape_string($_POST['course']);
+		$id = mysql_real_escape_string($_POST['id']);
+		$desc= mysql_real_escape_string($_POST['desc']);
 		/*$sql="Select * from course where name='$course'";
 		$res = mysqli_query($conn,$sql);
 			if(mysqli_num_rows($res)){
@@ -48,7 +48,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 				}			
 			//}
 	}else if($_POST['request']=="delete"){
-		$id = htmlspecialchars($_POST['id']);
+		$id = mysql_real_escape_string($_POST['id']);
 		$sql = "Update course set isDeleted = TRUE where id ='$id'";
 		
 		if(mysqli_query($conn,$sql)){

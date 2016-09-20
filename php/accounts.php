@@ -65,7 +65,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 			}else{
 				$sql = "Select * from users where username ='".$user."'";
 					if(mysqli_num_rows(mysqli_query($conn,$sql))){
-						$json[0]=array('MSG'=>'USERNAME TAKEN');
+						$json[0]=array('MSG'=>'USERNAME TsAKEN');
 					}else{
 						$sql = "Select * from teacher_information where email ='".$email."'";
 						if(mysqli_num_rows(mysqli_query($conn,$sql))){

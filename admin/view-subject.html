@@ -184,38 +184,26 @@ desired effect
     <section class="content-header">
       <h1>
         Subjects
-        <small>&raquo; Create New Subject</small>
+        <small>&raquo; List of All Subjects</small>
       </h1>
       <div class="well">
-      <form id="frmAddSubject">
-            <div class="form-group">
-              <label for="txtCode">Code</label>
-              <input type="text" id="txtCode" class="form-control req" placeholder="Subject Code">
-            </div>
-            <div class="form-group">
-              <label for="txtTitle">TITLE</label>
-              <input type="text" id="txtTitle" class="form-control req" placeholder="Title">
-            </div>
-            <div class="form-group">
-              <label for="txtUnits">UNITS</label>
-              <input type="number" id="txtUnits" class="form-control req" placeholder="Units" min="0">
-            </div>
-            <div class="form-group">
-              <label for="txtYear">YEAR</label>
-              <input type="text" id="txtYear" class="form-control req" placeholder="Year">
-            </div>
-            <div class="form-group">
-              <label for="txtSemester">SEMESTER</label>
-              <input type="text" id="txtSemester" class="form-control req" placeholder="Semester">
-            </div>
-            <div class="form-group">
-              <label for="txtTeacher">TEACHER</label>
-              <select class="form-control req" id="txtTeacher">
-                <option>HAHA</option>
-              </select>
-            </div>
-            <button type="sumbit" class="form-control btn-success"> Submit </button>
-      </form>
+              <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables">
+                      <thead class="cf">
+                        <tr>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Units</th>
+                            <th>Year</th>
+                            <th>Semester</th>
+                            <th>Teacher</th>
+                            <th>Action</th>
+
+                        </tr>
+                      </thead>
+                      <tbody id="tblBodyMain">
+
+                      </tbody>
+              </table>
       </div>
     </section>
 
@@ -274,7 +262,56 @@ desired effect
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
+<form id="frmUpdateSubject">
+  <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
 
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Subject</h4>   
+        </div>
+        <div class="modal-body">
+          
+            <div class="form-group">
+              <label for="txtCode">CODE</label>
+              <input type="text" id="txtCode" class="form-control req" readonly="">
+            </div>
+            <div class="form-group">
+              <label for="txtTitle">TITLE</label>
+              <input type="text" id="txtTitle" class="form-control req" placeholder="Title">
+            </div>
+            <div class="form-group">
+              <label for="txtUnits">UNITS</label>
+              <input type="number" id="txtUnits" class="form-control req" placeholder="Units" min="0">
+            </div>
+            <div class="form-group">
+              <label for="txtYear">YEAR</label>
+              <input type="text" id="txtYear" class="form-control req" placeholder="Year">
+            </div>
+            <div class="form-group">
+              <label for="txtSemester">SEMESTER</label>
+              <input type="text" id="txtSemester" class="form-control req" placeholder="Semester">
+            </div>
+            <div class="form-group">
+              <label for="txtTeacher">TEACHER</label>
+              <select class="form-control req" id="txtTeacher">
+                <option>HAHA</option>
+              </select>
+            </div>
+      
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+      </div>
+    </div>
+</div>
 </form>
 <!-- ./wrapper -->
 
@@ -290,23 +327,59 @@ desired effect
 <script src="../assets/js/datatable.js"></script>
 <script src="../assets/js/myJs.js"></script>
 <script>
-$(function(){
-   $.ajax({
+var teachers = []
+    $(document).ready(function(){
+    $.ajax({
         url:server+'teachers.php',
         dataType:'JSON',
         data:{request:'fetch_all'},
         type:'POST',
         success:function(data){
-          $('#txtTeacher').empty();
-          $('#txtTeacher').append('<option>---------</option>');
-          $.each(data,function(k,v){
-            $('#txtTeacher').append('<option value='+v.id+'>'+v.name+'</option>');
-            
-          })
-        } 
-  })
-})
-    $("#frmAddSubject").submit(function(e){
+          teachers=data
+          } 
+        })
+      $.ajax({
+        url:server+'subjects.php',
+        dataType:'JSON',
+        data:{request:'fetch_all'},
+        type:'POST',
+        success:function(data){
+          
+          $('#tblBodyMain').empty()
+            $.each(data,function(k,v){
+              var buttons = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' code="'+v.code+'" title="'+v.title+'" units="'+v.units+'" year="'+v.year+'" sem="'+v.sem+'" teacher = "'+v.teacher+'" t_id="'+v.t_id+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button>  <button class=\'btn btn-sm delete-me btn-danger\' id='+v.id+' ><span class=\'glyphicon glyphicon-trash\'></glyphicon></button>'
+              $('#tblBodyMain').append('<tr><td data-title=\"CODE\">'+v.code+'</td><td data-title=\"TITLE\">'+v.title+'</td><td data-title=\"UNITS\">'+v.units+'</td><td data-title=\"YEAR\">'+v.year+'</td><td data-title=\"SEMESTER\">'+v.sem+'</td><td data-title=\"TEACHER\">'+v.teacher+'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
+            })
+            $('.edit-me').click(function(){
+              var code = $(this).attr('code')
+              var title = $(this).attr('title')
+              var units = $(this).attr('units')
+              var year = $(this).attr('year')
+              var teacher = $(this).attr('teacher')
+              var semester = $(this).attr('sem')
+              var t_id = $(this).attr('t_id')
+                $('#txtCode').val(code)
+                $('#txtTitle').val(title)
+                $('#txtUnits').val(units)
+                $('#txtYear').val(year)
+                $('#txtTeacher').val(teacher)
+                $('#txtSemester').val(semester)
+                $('#txtTeacher').empty()
+                $('#txtTeacher').append('<option value="'+t_id+'">'+teacher+'</td>')
+                $.each(teachers,function(k,v){
+                  if(t_id!=v.id){
+                    $('#txtTeacher').append('<option value="'+v.id+'">'+v.name+'</td>')
+                  }
+                })
+                $('#myModal').modal('show')
+              })
+                 $('#no-more-tables').DataTable();
+        }
+      })
+   
+});
+
+    $("#frmUpdateSubject").submit(function(e){
       var total = $('.req').length
       var ctr =0
       var code = $("#txtCode").val()
@@ -329,20 +402,13 @@ $(function(){
         if(ctr==total){
           $.ajax({
             url:server+'subjects.php',
-            data:{teacher_id:teacher_id,code:code,title:title,units:units,year:year,sem:sem,request:'add_subject'},
+            data:{teacher_id:teacher_id,code:code,title:title,units:units,year:year,sem:sem,request:'update_subject'},
             dataType:'JSON',
             type:'POST',
             success:function(data){
-              if(data[0].MSG=="SUBJECT ADDED"){
+              if(data[0].MSG=="SUBJECT UPDATED"){
                 alert(data[0].MSG)
                 location.reload()
-              }else if(data[0].MSG=="SUBJECT CODE EXISTING"){
-                 $.each($('.req'),function(k,v){
-                      $(this).parent().addClass('has-success')  
-                  })
-                 $('#txtCode').parent().addClass('has-error')
-                 alert(data[0].MSG)
-                 $('#txtCode').focus();
               }else{
                 alert(data[0].MSG)
               }
@@ -352,7 +418,6 @@ $(function(){
           alert('Please fill all fields')
         }
       e.preventDefault()
-     
     })
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

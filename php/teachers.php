@@ -9,7 +9,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 		$sql = "Select * from teacher_information";
 		$res = mysqli_query($conn,$sql);
 		while($data=mysqli_fetch_array($res)){
-			$json[0]=array('MSG'=>'GOOD','name'=>$data['firstname']." ".$data['lastname']);
+			$json[]=array('MSG'=>'GOOD','name'=>$data['firstname']." ".$data['lastname'],'id'=>$data['id']);
 		}
 	}
 }
