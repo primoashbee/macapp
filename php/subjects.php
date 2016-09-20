@@ -20,7 +20,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 		$sql = "Select * from subject_information";
 		$res = mysqli_query($conn,$sql);
 			while($data=mysqli_fetch_array($res)){
-				$json[]=array('id'=>$data['id'],'code'=>$data['code'],'title'=>$data['title'],'units'=>$data['units'],'year'=>$data['year'],'sem'=>$data['sem'],'acad_year'=>$data['acad_year'],'teacher'=>$data['firstname']." ".$data['lastname'],'t_id'=>$data['t_id']);
+				$json[]=array('id'=>$data['id'],'code'=>$data['code'],'title'=>$data['title'],'units'=>$data['units'],'year'=>$data['year'],'sem'=>$data['sem'],'acad_year'=>$data['acad_year'],'teacher'=>$data['firstname']." ".$data['lastname'],'t_id'=>$data['t_id'],'isDeleted'=>$data['isdeleted']);
 			}
 
 	}else if($req =="update_subject"){
@@ -45,11 +45,25 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 
 		$json[0]=array('MSG'=>'SUBJECT CODE EXISTING');
 		if(!checkSubjectIfExist($code)){
-			$sql = "Insert into subjects(code,title,units,year,sem,t_id)values('$code','$title','$units','$year','$sem','$t_id')";
+			$sql = "Insert into subjects(code,title,units,year,sem,t_id,isDeleted)values('$code','$title','$units','$year','$sem','$t_id',false)";
 				if(mysqli_query($conn,$sql)){
 				$json[0]=array('MSG'=>'SUBJECT ADDED');
 			}
 		}
+	}else if($req =="delete_subject"){
+		$id=mysql_real_escape_string($_POST['id']);
+		$json[0]=array('MSG'=>'ERROR');
+		$sql="update subjects set isDeleted = true where id ='$id'";
+		if(mysqli_query($conn,$sql)){
+			$json[0]=array('MSG'=>'SUBJECT DELETED');
+		}
+	}else if($req=="recover_subject"){
+		$id=mysql_real_escape_string($_POST['id']);
+		$json[0]=array('MSG'=>'ERROR');
+		$sql="update subjects set isDeleted = false where id ='$id'";
+		if(mysqli_query($conn,$sql)){
+			$json[0]=array('MSG'=>'SUBJECT RECOVERED');
+		}		
 	}
 	
 }

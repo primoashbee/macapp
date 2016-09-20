@@ -13,7 +13,14 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 			$json[]=array('id'=>$data['id'],'course'=>$data['name'],'desc'=>$data['description']);		
 		}
 		
-	}elseif($_POST['request']=="create"){
+	}else if($_POST['request']=="fetch_with_archive"){
+		$sql="Select * from course";
+		$res = mysqli_query($conn,$sql);
+		while($data=mysqli_fetch_array($res)){
+			$json[]=array('id'=>$data['id'],'course'=>$data['name'],'desc'=>$data['description'],'isDeleted'=>$data['isDeleted']);		
+		}
+		
+	}else if($_POST['request']=="create"){
 		$course = mysql_real_escape_string($_POST['course']);
 		$desc= mysql_real_escape_string($_POST['desc']);
 		$sql="Select * from course where name='$course'";
@@ -53,6 +60,15 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 		
 		if(mysqli_query($conn,$sql)){
 			$json[0]=array('MSG'=>'COURSE DELETED!');
+		}else{
+			$json[0]=array('MSG'=>'COURSE 404!');
+		}
+	}else if($_POST['request']=="recover"){
+		$id = mysql_real_escape_string($_POST['id']);
+		$sql = "Update course set isDeleted = false where id ='$id'";
+		
+		if(mysqli_query($conn,$sql)){
+			$json[0]=array('MSG'=>'COURSE RECOVERED');
 		}else{
 			$json[0]=array('MSG'=>'COURSE 404!');
 		}

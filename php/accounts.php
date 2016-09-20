@@ -36,10 +36,10 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 							$json[0]=array('MSG'=>'EMAIL ALREADY TAKEN');
 						}else{
 							$json[0]=array('MSG'=>'ACCOUNT 404');	
-							$sql ="Insert into users(username,passkey,role)values('".$user."','".$pass."','student')";
+							$sql ="Insert into users(username,passkey,role)values('".$user."','".$pass."','student',isDeleted)";
 							if(mysqli_query($conn,$sql)){
 								$sql="Insert into students_information(username,firstname,lastname,age,course,sex,email,birthday)values
-								('".$user."','".$fname."','".$lname."','".$age."','".$course."','".$sex."','".$email."','".$birthday."')";
+								('".$user."','".$fname."','".$lname."','".$age."','".$course."','".$sex."','".$email."','".$birthday."',true)";
 								if(mysqli_query($conn,$sql)){
 										$json[0]=array('MSG'=>'ACCOUNT CREATED');			
 									}
@@ -72,7 +72,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 							$json[0]=array('MSG'=>'EMAIL ALREADY TAKEN');
 						}else{
 							$json[0]=array('MSG'=>'ACCOUNT 404');	
-							$sql ="Insert into users(username,passkey,role)values('".$user."','".$pass."','teacher')";
+							$sql ="Insert into users(username,passkey,role,isDeleted)values('".$user."','".$pass."','teacher',true)";
 							if(mysqli_query($conn,$sql)){
 								$sql="Insert into teacher_information(username,firstname,lastname,age,sex,email,birthday)values
 								('".$user."','".$fname."','".$lname."','".$age."','".$sex."','".$email."','".$birthday."')";

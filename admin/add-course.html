@@ -326,14 +326,21 @@ desired effect
       $.ajax({
         url:server+'courses.php',
         dataType:'JSON',
-        data:{request:'fetch_all'},
+        data:{request:'fetch_with_archive'},
         type:'POST',
         success:function(data){
           
           $('#tblBodyMain').empty()
            
             $.each(data,function(k,v){
-              var buttons = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' course="'+v.course+'" desc="'+v.desc+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button> <button class=\'btn btn-sm delete-me btn-danger\' id='+v.id+' course="'+v.course+'" desc="'+v.desc+'"><span class=\'glyphicon glyphicon-trash\'></glyphicon></button>'
+              var button1 = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' course="'+v.course+'" desc="'+v.desc+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button>'
+              if(v.isDeleted==0){
+              var button2='<button class=\'btn btn-sm delete-me btn-danger\' id='+v.id+' course="'+v.course+'" desc="'+v.desc+'"><span class=\'glyphicon glyphicon-trash\'></glyphicon></button>'
+              }else{                  
+              var button2='<button class=\'btn btn-sm recover-me btn-refresh \' id='+v.id+' course="'+v.course+'" desc="'+v.desc+'"><span class=\'glyphicon glyphicon-refresh\'></glyphicon></button>'
+              
+              }
+              var buttons = button1 + ' '+button2
               $('#tblBodyMain').append('<tr><td data-title=\"Course\">'+v.course+'</td><td data-title=\"Description\">'+v.desc+'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
             })
 
@@ -368,6 +375,28 @@ desired effect
                 })
               }
             })
+            $('.recover-me').click(function(){
+              var res = confirm('Are you sure you want to recover this course?')
+              var id = $(this).attr('id')
+              if(res){
+                //softdelete
+                $.ajax({
+                  url:server+'courses.php',
+                  data:{request:'recover',id:id},
+                  dataType:'JSON',
+                  type:'POST',
+                  success:function(data){
+                    if(data[0].MSG=="COURSE RECOVERED"){
+                      alert(data[0].MSG)
+                      location.reload()
+                    }else{
+                      alert(data[0].MSG)
+                    }
+                  }
+                })
+              }
+            })
+
                  $('#no-more-tables').DataTable();
         },
         fail:function(){
