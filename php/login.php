@@ -3,7 +3,7 @@ require "config.php";
 session_start();
 $user = mysql_real_escape_string($_POST['user']);
 $pass = mysql_real_escape_string($_POST['pass']);
-$sql="Select * from users where username='".$user."' and passkey='".$pass."'";
+$sql="Select * from users where username='".$user."' and passkey='".$pass."' and isDeleted=false";
 $res = mysqli_query($conn,$sql);
 $json=array();
 if(mysqli_num_rows($res)){

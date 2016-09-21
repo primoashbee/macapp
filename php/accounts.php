@@ -11,7 +11,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 		$sql ="Select * from users where role !='admin'";
 		$res = mysqli_query($conn,$sql);
 			while($data=mysqli_fetch_array($res)){
-				$json[]=array('MSG'=>1,'id'=>$data['id'],'username'=>$data['username'],'password'=>$data['passkey'],'role'=>$data['role']);	
+				$json[]=array('MSG'=>1,'id'=>$data['id'],'username'=>$data['username'],'password'=>$data['passkey'],'role'=>$data['role'],'isDeleted'=>$data['isDeleted']);	
 			}
 	}else if($request=="create"){
 		$user=mysql_real_escape_string($_POST['user']);
@@ -32,14 +32,18 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 						$json[0]=array('MSG'=>'USERNAME TAKEN');
 					}else{
 						$sql = "Select * from students_information where email ='".$email."'";
+
 						if(mysqli_num_rows(mysqli_query($conn,$sql))){
 							$json[0]=array('MSG'=>'EMAIL ALREADY TAKEN');
 						}else{
 							$json[0]=array('MSG'=>'ACCOUNT 404');	
-							$sql ="Insert into users(username,passkey,role)values('".$user."','".$pass."','student',isDeleted)";
+							$sql ="Insert into users(username,passkey,role,isDeleted)values('".$user."','".$pass."','student',false)";
+							
+							
 							if(mysqli_query($conn,$sql)){
 								$sql="Insert into students_information(username,firstname,lastname,age,course,sex,email,birthday)values
-								('".$user."','".$fname."','".$lname."','".$age."','".$course."','".$sex."','".$email."','".$birthday."',true)";
+								('".$user."','".$fname."','".$lname."','".$age."','".$course."','".$sex."','".$email."','".$birthday."')";
+
 								if(mysqli_query($conn,$sql)){
 										$json[0]=array('MSG'=>'ACCOUNT CREATED');			
 									}
@@ -72,7 +76,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 							$json[0]=array('MSG'=>'EMAIL ALREADY TAKEN');
 						}else{
 							$json[0]=array('MSG'=>'ACCOUNT 404');	
-							$sql ="Insert into users(username,passkey,role,isDeleted)values('".$user."','".$pass."','teacher',true)";
+							$sql ="Insert into users(username,passkey,role,isDeleted)values('".$user."','".$pass."','teacher',false)";
 							if(mysqli_query($conn,$sql)){
 								$sql="Insert into teacher_information(username,firstname,lastname,age,sex,email,birthday)values
 								('".$user."','".$fname."','".$lname."','".$age."','".$sex."','".$email."','".$birthday."')";
@@ -85,6 +89,21 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 			}
 		
 
+	}else if($request=="soft_delete"){
+		$json[0]=array('MSG'=>'ACCOUNT ERROR');
+		$user=mysql_real_escape_string($_POST['user']);
+		$sql = "Update users set isDeleted = true where username='$user'";
+
+		if(mysqli_query($conn,$sql)){
+			$json[0]=array('MSG'=>'ACCOUNT DELETED');
+		}
+	}else if($request=="recover"){
+		$json[0]=array('MSG'=>'ACCOUNT ERROR');
+		$user=mysql_real_escape_string($_POST['user']);
+		$sql = "Update users set isDeleted = false where username='$user'";
+		if(mysqli_query($conn,$sql)){
+			$json[0]=array('MSG'=>'ACCOUNT RECOVERED');
+		}
 	}
 }
 echo json_encode($json);
