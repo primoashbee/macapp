@@ -50,9 +50,10 @@ hr {
     border: none;
     border-bottom: 1px solid #eee; 
     position: relative;
-    padding-left: 50%; 
+    padding-left: 35%;
+    overflow: auto; 
     white-space: normal;
-    text-align:left;
+    text-align:middle;
   }
  
   #no-more-tables td:before { 

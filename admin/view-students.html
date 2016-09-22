@@ -195,19 +195,20 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Subjects
-        <small>&raquo; List of All Subjects</small>
+        Students
+        <small>&raquo; List of All Students</small>
       </h1>
       <div class="well">
               <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables">
                       <thead class="cf">
                         <tr>
-                            <th>Code</th>
-                            <th>Title</th>
-                            <th>Units</th>
-                            <th>Year</th>
-                            <th>Semester</th>
-                            <th>Teacher</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Course</th>
+                            <th>Age</th>
+                            <th>Birthday</th>
+                            <th>Gender</th>
+                            <th>Email</th>
                             <th>Action</th>
 
                         </tr>
@@ -274,7 +275,7 @@ desired effect
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-<form id="frmUpdateSubject">
+<form id="frmUpdateStudent">
   <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -283,34 +284,36 @@ desired effect
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update Subject</h4>   
+          <h4 class="modal-title">Update Information</h4>   
         </div>
         <div class="modal-body">
-          
+            <input type="hidden" id="txtId"> 
             <div class="form-group">
-              <label for="txtCode">CODE</label>
-              <input type="text" id="txtCode" class="form-control req" readonly="">
+              <label for="txtFname">Firstname</label>
+              <input type="text" id="txtFname" class="form-control req" placeholder="Firstname">
             </div>
             <div class="form-group">
-              <label for="txtTitle">TITLE</label>
-              <input type="text" id="txtTitle" class="form-control req" placeholder="Title">
+              <label for="txtLname">Lastname</label>
+              <input type="text" id="txtLname" class="form-control req" placeholder="Lastname">
             </div>
             <div class="form-group">
-              <label for="txtUnits">UNITS</label>
-              <input type="number" id="txtUnits" class="form-control req" placeholder="Units" min="0">
+              <label for="txtBirthday">Birthday</label>
+              <p> Age : <b><span id="lblAge"></span></b></p> 
+              <input type="date" id="txtBirthday" class="form-control req">
             </div>
             <div class="form-group">
-              <label for="txtYear">YEAR</label>
-              <input type="text" id="txtYear" class="form-control req" placeholder="Year">
+              <label for="txtCourse">Course</label>
+              <input type="text" id="txtCourse" class="form-control req" placeholder="Year">
             </div>
             <div class="form-group">
-              <label for="txtSemester">SEMESTER</label>
-              <input type="text" id="txtSemester" class="form-control req" placeholder="Semester">
+              <label for="txtEmail">Email</label>
+              <input type="text" id="txtEmail" class="form-control req" placeholder="Email">
             </div>
             <div class="form-group">
-              <label for="txtTeacher">TEACHER</label>
-              <select class="form-control req" id="txtTeacher">
-                <option>HAHA</option>
+              <label for="txtSex">Gender</label>
+              <select class="form-control req" id="txtSex">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </div>
       
@@ -339,19 +342,11 @@ desired effect
 <script src="../assets/js/datatable.js"></script>
 <script src="../assets/js/myJs.js"></script>
 <script>
-var teachers = []
+
     $(document).ready(function(){
-    $.ajax({
-        url:server+'teachers_accs.php',
-        dataType:'JSON',
-        data:{request:'fetch_all'},
-        type:'POST',
-        success:function(data){
-          teachers=data
-          } 
-        })
+  
       $.ajax({
-        url:server+'subjects.php',
+        url:server+'students.php',
         dataType:'JSON',
         data:{request:'fetch_all'},
         type:'POST',
@@ -359,41 +354,39 @@ var teachers = []
           
           $('#tblBodyMain').empty()
             $.each(data,function(k,v){
-              var button1 = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' code="'+v.code+'" title="'+v.title+'" units="'+v.units+'" year="'+v.year+'" sem="'+v.sem+'" teacher = "'+v.teacher+'" t_id="'+v.t_id+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button>'
-            console.log(v.isDeleted==0)
-            if(v.isDeleted==0){
+              var button1 = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' age="'+v.age+'" bday="'+v.bday+'" course="'+v.course+'" email="'+v.email+'" fname="'+v.fname+'" lname = "'+v.lname+'" sex="'+v.sex+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button>'
+          
+           /* if(v.isDeleted==0){
               var button2='<button class=\'btn btn-sm delete-me btn-danger\' id='+v.id+' ><span class=\'glyphicon glyphicon-trash\'></glyphicon></button>'
             }else{
               var button2='<button class=\'btn btn-sm btn-refresh recover-me style=\'background-color:#3c8dbc !important;\'\' id='+v.id+' ><span class=\'glyphicon glyphicon-refresh\'></glyphicon></button>'
             
             }
+            */ button2=""
               var buttons = button1+' '+button2
-              $('#tblBodyMain').append('<tr><td data-title=\"CODE\">'+v.code+'</td><td data-title=\"TITLE\">'+v.title+'</td><td data-title=\"UNITS\">'+v.units+'</td><td data-title=\"YEAR\">'+v.year+'</td><td data-title=\"SEMESTER\">'+v.sem+'</td><td data-title=\"TEACHER\">'+v.teacher+'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
+              $('#tblBodyMain').append('<tr><td data-title=\"FIRSTNAME\">'+v.fname+'</td><td data-title=\"LASTNAME\">'+v.lname+'</td><td data-title="COURSE">'+v.course+'</td><td data-title=\"AGE\">'+v.age+'</td><td data-title=\"BIRTHDAY\">'+v.bday+'</td><td data-title=\"GENDER\">'+v.sex+'</td><td data-title=\"EMAIL\">'+v.email+'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
             })
             $('.edit-me').click(function(){
-              var code = $(this).attr('code')
-              var title = $(this).attr('title')
-              var units = $(this).attr('units')
-              var year = $(this).attr('year')
-              var teacher = $(this).attr('teacher')
-              var semester = $(this).attr('sem')
-              var t_id = $(this).attr('t_id')
-                $('#txtCode').val(code)
-                $('#txtTitle').val(title)
-                $('#txtUnits').val(units)
-                $('#txtYear').val(year)
-                $('#txtTeacher').val(teacher)
-                $('#txtSemester').val(semester)
-                $('#txtTeacher').empty()
-                $('#txtTeacher').append('<option value="'+t_id+'">'+teacher+'</td>')
-                $.each(teachers,function(k,v){
-                  if(t_id!=v.id){
-                    $('#txtTeacher').append('<option value="'+v.id+'">'+v.name+'</td>')
-                  }
-                })
+              var id = $(this).attr('id')
+              var lname = $(this).attr('lname')
+              var fname = $(this).attr('fname')
+              var course = $(this).attr('course')
+              var age = $(this).attr('age')
+              var bday = $(this).attr('bday')
+              var gender = $(this).attr('sex')
+              var email = $(this).attr('email')
+                $('#txtId').val(id)
+                $('#txtLname').val(lname)
+                $('#txtFname').val(fname)
+                $('#txtCourse').val(course)
+                $('#lblAge').html(age)
+                $('#txtBirthday').val(bday)
+                $('#txtGender').val(gender)
+                $('#txtEmail').val(email)
+                
                 $('#myModal').modal('show')
               })
-            $('.delete-me').click(function(){
+            $('.delete-me1').click(function(){
               var res = confirm('Are you sure you want to delete this subject?')
               var id = $(this).attr('id')
 
@@ -416,7 +409,7 @@ var teachers = []
               }
            
             })
-            $('.recover-me').click(function(){
+            $('.recover-me1').click(function(){
               var res = confirm('Are you sure you want to recover this subject?')
               var id = $(this).attr('id')
 
@@ -439,51 +432,57 @@ var teachers = []
               }
            
             })            
-                 $('#no-more-tables').DataTable();
+                 $('#no-more-tables').DataTable(
+                      {  "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]}
+                  );
         }
       })
    
 });
 
-    $("#frmUpdateSubject").submit(function(e){
+    $("#frmUpdateStudent").submit(function(e){
+
       var total = $('.req').length
-      var ctr =0
-      var code = $("#txtCode").val()
-      var title = $("#txtTitle").val()
-      var units = $("#txtUnits").val()
-      var year = $("#txtYear").val()
-      var sem = $("#txtSemester").val()
-      var teacher_id = $("#txtTeacher").val()
+      var id = $("#txtId").val()
+      var lname=$('#txtLname').val()
+      var fname=$('#txtFname').val()
+      var course=$('#txtCourse').val()
+      var age=$('#lblAge').html()
+      var bday=$('#txtBirthday').val()
+      var gender=$('#txtGender').val()
+      var email=$('#txtEmail').val() 
+      var sex=$('#txtSex').val() 
 
-
+      x=0
         $.each($('.req'),function(k,v){
           if($(this).val()==""){
-            $(this).parent().addClass('has-error')
+          $(this).parent().addClass('has-error')
           }else{
-            ctr++
-            $(this).parent().addClass('has-success ')
-
+          $(this).parent().removeClass('has-error')
+          $(this).parent().addClass('has-success')
+          
+          x=x+1}
+        })
+        $.ajax({
+          url:server+'students.php',
+          data:{id:id,fname:fname,lname:lname,bday:bday,age:age,course:course,sex:sex,email:email,request:'update'},
+          dataType:'JSON',
+          type:'POST',
+          success:function(data){
+                  if(data[0].MSG=="INFORMATION UPDATED"){
+                    alert(data[0].MSG)
+                    location.reload()
+                  }else{
+                    alert(data[0].MSG) 
+                  }
           }
         })
-        if(ctr==total){
-          $.ajax({
-            url:server+'subjects.php',
-            data:{teacher_id:teacher_id,code:code,title:title,units:units,year:year,sem:sem,request:'update_subject'},
-            dataType:'JSON',
-            type:'POST',
-            success:function(data){
-              if(data[0].MSG=="SUBJECT UPDATED"){
-                alert(data[0].MSG)
-                location.reload()
-              }else{
-                alert(data[0].MSG)
-              }
-            }
-          })
-        }else{
-          alert('Please fill all fields')
-        }
+     
       e.preventDefault()
+    })
+
+    $('#txtBirthday').change(function(){
+      $('#lblAge').html(getAge($(this).val()))
     })
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
