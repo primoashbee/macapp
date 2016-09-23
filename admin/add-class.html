@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>MACSAT APP</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../bootstrap/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../assets/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="../assets/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/datatables.css">
+
+  <style>
+
+
+  </style>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+  <![endif]-->
+
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>MC</b>ST</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>MACSAT</b> IBA</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+         
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="../assets/img/admin.png" class="img-circle" style="background-color:white">
+        </div>
+        
+        <div class="pull-left info">
+
+          <p id="myName">Administrator</p>
+          <!-- Status -->
+          <a ><i class="fa fa-circle text-success"></i ><span id="myStudentNumber">Administrator</span></a>
+        </div>        
+      </div>
+
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+        <li class="header">NAVIGATION</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span><b>ACCOUNTS</b></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="add-account.html"><i class="fa fa-plus"></i> Create Account</a></li>
+            <li><a href="index.html"><i class="fa fa-eye"></i> View Accounts</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span><b>COURSE</b></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="add-course.html"><i class="fa fa-plus"></i> Create Course</a></li>
+          </ul>
+        </li>        
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span><b>SUBJECTS</b></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+         
+          <ul class="treeview-menu">
+            <li><a href="add-subject.html"><i class="fa fa-plus"></i> Create Subject</a></li>
+            <li><a href="view-subject.html"><i class="fa fa-eye"></i> View Subject</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span><b>TEACHERS</b></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+         
+          <ul class="treeview-menu">
+      
+            <li><a href="view-teachers.html"><i class="fa fa-th-list"></i> View Teachers</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span><b>STUDENTS</b></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>       
+          </a>
+         
+          <ul class="treeview-menu">
+      
+            <li><a href="view-students.html"><i class="fa fa-th-list"></i> View Students</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span><b>CLASS MANAGEMENT</b></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="add-class.html"><i class="fa fa-plus"></i> Create Class</a></li>
+            <li><a href="view-class.html"><i class="fa fa-eye"></i> View Class</a></li>
+          </ul>
+        </li>        
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Classes
+        <small>&raquo; List of All Classes</small>
+      </h1>
+      <div class="well">
+              <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables">
+                      <thead class="cf">
+                        <tr>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Units</th>
+                            <th>Year</th>
+                            <th>Semester</th>
+                            <th>Teacher</th>
+                            <th># of Students</th>
+                            <th>Action</th>
+
+                        </tr>
+                      </thead>
+                      <tbody id="tblBodyMain">
+
+                      </tbody>
+              </table>
+      </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Your Page Content Here -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Mobile App
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2016 <a href="#">MACSAT, IBA ZAMBALES</a>.</strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+  
+      <li class="active"><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <h3 clas="lead">Change Password</h3>
+      <label for="password">Old Password</label>
+      <input type="password" class="form-control" id="password">
+      <label for="newpass1">New Password</label>
+      <input type="password" class="form-control" id="newpass2">
+      <label for="password2">Confirm Password</label>
+      <input type="password" class="form-control" id="password2">      
+      <div style="padding-top:15px">
+      <div class="col-xs-6" ><button id="btnChangePass" class="btn btn-refresh" style="text-align:right"><span class="glyphicon glyphicon-ok"></span> Change</button></div>
+      <div class="col-xs-6"><button id="btnLogOut" class="btn btn-default" style="text-align:right"><span class="glyphicon glyphicon-log-out"></span> Log Out</button></div>
+      </div>
+      
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+  
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+     
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+
+  <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Students in Class</h4>   
+        </div>
+        <div class="modal-body">
+             <table class="table table-bordered table-striped table-condensed cf responsive-tables" id ="tblMyStudentListView">
+                      <thead class="cf">
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastyear</th>
+                            <th>Action</th>
+
+                        </tr>
+                      </thead>
+                      <tbody  id="tblStudentBody">
+
+                      </tbody>
+              </table>
+        <div class="modal-footer">
+       
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+      </div>
+    </div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../assets/js/app.min.js"></script>
+<script src="../assets/js/stacktable.js"></script>
+<script src="../assets/js/datatable.js"></script>
+<script src="../assets/js/myJs.js"></script>
+<script>
+var teachers = []
+var lists=[]
+var x=[]
+    $(document).ready(function(){
+    $.ajax({
+        url:server+'teachers.php',
+        dataType:'JSON',
+        data:{request:'teachers_accs'},
+        type:'POST',
+        success:function(data){
+          teachers=data
+          } 
+        })
+      $.ajax({
+        url:server+'class.php',
+        dataType:'JSON',
+        data:{request:'fetch_all'},
+        type:'POST',
+        success:function(data){
+          lists = data
+          $('#tblBodyMain').empty()
+            $.each(data,function(k,v){
+
+              var button1 = '<button class=\'btn btn-sm view-me btn-default\' id='+v.id+' code="'+v.code+'" title="'+v.title+'" units="'+v.units+'" year="'+v.year+'" sem="'+v.sem+'" teacher = "'+v.teacher+'" t_id="'+v.t_id+'"><span class=\'glyphicon glyphicon-eye-open  \'></glyphicon></button>'
+           
+              var button2='<button class=\'btn btn-sm btn-refresh add-students style=\'background-color:#3c8dbc !important;\'\' id='+v.id+' ><span class=\'glyphicon glyphicon-plus\'></glyphicon></button>'
+            
+           
+              var buttons = button1+' '+button2
+              $('#tblBodyMain').append('<tr><td data-title=\"CODE\">'+v.code+'</td><td data-title=\"TITLE\">'+v.title+'</td><td data-title=\"UNITS\">'+v.units+'</td><td data-title=\"YEAR\">'+v.year+'</td><td data-title=\"SEMESTER\">'+v.sem+'</td><td data-title=\"TEACHER\">'+v.teacher+'</td><td data-title=\"CLASS SIZE"\ >'+v.count +'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
+            })
+            $('.edit-me').click(function(){
+              var z;
+              var code = $(this).attr('code')
+              var title = $(this).attr('title')
+              var units = $(this).attr('units')
+              var year = $(this).attr('year')
+              var teacher = $(this).attr('teacher')
+              var semester = $(this).attr('sem')
+              var t_id = $(this).attr('t_id')
+                $('#txtCode').val(code)
+                $('#txtTitle').val(title)
+                $('#txtUnits').val(units)
+                $('#txtYear').val(year)
+                $('#txtTeacher').val(teacher)
+                $('#txtSemester').val(semester)
+                $('#txtTeacher').empty()
+                $('#txtTeacher').append('<option value="'+t_id+'">'+teacher+'</td>')
+                $.each(teachers,function(k,v){
+                  if(t_id!=v.id){
+                    $('#txtTeacher').append('<option value="'+v.id+'">'+v.name+'</td>')
+                  }
+                })
+                $('#myModal').modal('show')
+              })
+            $('.view-me').click(function(){
+              var id = $(this).attr('id')
+                $.ajax({
+                  url:server+'class.php',
+                  data:{id:id,request:'get_list_by_id'},
+                  dataType:'JSON',
+                  type:'POST',
+                  success:function(data){
+                    x= data
+                   $('#tblStudentBody').empty()
+                   $.each(data,function(k,v){
+                   var button = '<button class="btn btn-sm btn-danger" id='+v.id+'><span class="glyphicon glyphicon-remove"></span></button>'
+                   $('#tblStudentBody').append('<tr><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="LASTNAME">'+v.lname+'</td><td data-title="ACTION">'+button+'</td></tr>')
+                   })
+                   $('#myModal').modal('show')
+                   $('#tblMyStudentListView').DataTable();
+                  }
+                })
+              
+           
+            })
+            $('.recover-me').click(function(){
+              var res = confirm('Are you sure you want to recover this subject?')
+              var id = $(this).attr('id')
+
+              if(res == true){
+                $.ajax({
+                  url:server+'subjects.php',
+                  data:{id:id,request:'recover_subject'},
+                  dataType:'JSON',
+                  type:'POST',
+                  success:function(data){
+                    if(data[0].MSG=="SUBJECT RECOVERED"){
+                      alert(data[0].MSG)
+                      location.reload()
+                    }else{
+                      alert(data[0].MSG)
+                    }
+
+                  }
+                })
+              }
+           
+            })            
+                 $('#no-more-tables').DataTable();
+        }
+      })
+   
+});
+
+    $("#frmUpdateSubject").submit(function(e){
+      var total = $('.req').length
+      var ctr =0
+      var code = $("#txtCode").val()
+      var title = $("#txtTitle").val()
+      var units = $("#txtUnits").val()
+      var year = $("#txtYear").val()
+      var sem = $("#txtSemester").val()
+      var teacher_id = $("#txtTeacher").val()
+
+
+        $.each($('.req'),function(k,v){
+          if($(this).val()==""){
+            $(this).parent().addClass('has-error')
+          }else{
+            ctr++
+            $(this).parent().addClass('has-success ')
+
+          }
+        })
+        if(ctr==total){
+          $.ajax({
+            url:server+'subjects.php',
+            data:{teacher_id:teacher_id,code:code,title:title,units:units,year:year,sem:sem,request:'update_subject'},
+            dataType:'JSON',
+            type:'POST',
+            success:function(data){
+              if(data[0].MSG=="SUBJECT UPDATED"){
+                alert(data[0].MSG)
+                location.reload()
+              }else{
+                alert(data[0].MSG)
+              }
+            }
+          })
+        }else{
+          alert('Please fill all fields')
+        }
+      e.preventDefault()
+    })
+</script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+</body>
+</html>
