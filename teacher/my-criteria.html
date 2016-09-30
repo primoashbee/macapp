@@ -27,7 +27,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../assets/css/datatables.css">
 
   <style>
-
+  .labeled{
+   margin-left:10px;
+  }
 
   </style>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -100,7 +102,7 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../assets/img/admin.png" class="img-circle" style="background-color:white">
+          <img src="../assets/img/teacher.png" class="img-circle" style="background-color:white">
         </div>
         
         <div class="pull-left info">
@@ -117,73 +119,35 @@ desired effect
         <li class="header">NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span><b>ACCOUNTS</b></span>
+          <a href="#"><i class="fa fa-user"></i> <span><b>My Class Loads</b></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="add-account.html"><i class="fa fa-plus"></i> Create Account</a></li>
-            <li><a href="index.html"><i class="fa fa-eye"></i> View Accounts</a></li>
+            <li><a href="my-class.html"><i class="glyphicon   glyphicon-th-list"></i>List of My Class</a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span><b>COURSE</b></span>
+          <a href="#"><i class="glyphicon glyphicon-align-left"></i> <span><b>Grading Criteria</b></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="add-course.html"><i class="fa fa-plus"></i> Create Course</a></li>
-          </ul>
-        </li>        
-        <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span><b>SUBJECTS</b></span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-         
-          <ul class="treeview-menu">
-            <li><a href="add-subject.html"><i class="fa fa-plus"></i> Create Subject</a></li>
-            <li><a href="view-subject.html"><i class="fa fa-eye"></i> View Subject</a></li>
+            <li><a href="my-criteria.html"><i class="glyphicon glyphicon-tasks"></i>Manage Criteria</a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span><b>TEACHERS</b></span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-         
-          <ul class="treeview-menu">
-      
-            <li><a href="view-teachers.html"><i class="fa fa-th-list"></i> View Teachers</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span><b>STUDENTS</b></span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-         
-          <ul class="treeview-menu">
-      
-            <li><a href="view-students.html"><i class="fa fa-th-list"></i> View Students</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span><b>CLASS MANAGEMENT</b></span>
+          <a href="#"><i class="glyphicon glyphicon-check"></i> <span><b>Grading</b></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="add-class.html"><i class="fa fa-plus"></i> Create Class</a></li>
-        
+            <li><a href="update-grades.html"><i class="glyphicon glyphicon-edit"></i>Update Grades</a></li>
           </ul>
-        </li>        
+        </li>         
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -193,19 +157,23 @@ desired effect
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header" id="divMain">
       <h1>
-        Accounts
-        <small>&raquo; List of All Accounts</small>
+      My Class 
+        <small>&raquo; List of my Classes</small>
       </h1>
       <div class="well">
               <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables">
                       <thead class="cf">
                         <tr>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>Role</th>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Units</th>
+                            <th>Year</th>
+                            <th>Semester</th>
+                            <th># of Students</th>
                             <th>Action</th>
+
                         </tr>
                       </thead>
                       <tbody id="tblBodyMain">
@@ -214,13 +182,52 @@ desired effect
               </table>
       </div>
     </section>
-
+<form id="frmMyCriteria">
     <!-- Main content -->
-    <section class="content">
-
+    <section class="content" id ="divMyList">
+      <div class="well">
+        <h1><span id="lblSubjectInfo"></span></h1>
+         <h4><center><b>Set up</b> your <b>GRADING CRITERIA</b></center></h4>
+      <button class="btn btn-default" id="btnBack" type="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+          <div class="form-group">
+            <h4><center>Attendance</center></h4>
+            <input type="hidden" id="txtClassId">
+            <hr>
+            <label for="txtAttendanceTotal">Total Points</label>
+            <input type="number" min=1 id ="txtAttendaceTotal" class="form-control labeled">
+            <label for="txtAttendancePercent">Percentage (%)</label>
+            <input type="number" min=1 id ="txtAttendacePercent" class="form-control labeled">
+          </div>      
+          <div class="form-group">
+            <h4><center>Quiz</center></h4>
+            <hr>
+            <label for="txtQuizTotal">Total Points</label>
+            <input type="number" min=1 id ="txtQuizTotal" class="form-control labeled">
+            <label for="txtQuizPercent">Percentage (%)</label>
+            <input type="number" min=1 id ="txtQuizPercent" class="form-control labeled">
+          </div>  
+          <div class="form-group">
+            <h4><center>Project</center></h4>
+            <hr>
+            <label for="txtProjectTotal">Total Points</label>
+            <input type="number" min=1 id ="txtProjectTotal" class="form-control labeled">
+            <label for="txtProjectPercent">Percentage (%)</label>
+            <input type="number" min=1 id ="txtProjectPercent" class="form-control labeled">
+          </div>    
+          <div class="form-group">
+            <h4><center>Exams</center></h4>
+            <hr>
+            <label for="txtExamsTotal">Total Points</label>
+            <input type="number" min=1 id ="txtExamsTotal" class="form-control labeled">
+            <label for="txtExamsPercent">Percentage (%)</label>
+            <input type="number" min=1 id ="txtExamsPercent" class="form-control labeled">
+          </div>
+          <button type="submit" class="btn form-control btn-success">Save</button>
+      </div>
       <!-- Your Page Content Here -->
 
     </section>
+</form>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -285,19 +292,19 @@ desired effect
           <form id="frmUpdateAccount">
             <div class="form-group">
               <label for="txtUsername">Username</label>
-              <input type="text" id="txtUsername" class="form-control" readonly="">
+              <input type="text" id="txtUsername" class="form-control req" readonly="">
             </div>
             <div class="form-group">
               <label for="txtOldPass">Password</label>
-              <input type="text" id="txtOldPass" class="form-control" placeholder="Old Password">
+              <input type="text" id="txtOldPass" class="form-control req" placeholder="Old Password">
             </div>
             <div class="form-group">
               <label for="txtNewPassword">New Password</label>
-              <input type="text" id="txtNewPassword" class="form-control" placeholder="New Password">
+              <input type="text" id="txtNewPassword" class="form-control req" placeholder="New Password">
             </div>
             <div class="form-group">
               <label for="txtNewPasswordConfirm">New Password</label>
-              <input type="text" id="txtNewPasswordConfirm" class="form-control" placeholder="Confirm Password">
+              <input type="text" id="txtNewPasswordConfirm" class="form-control req" placeholder="Confirm Password">
             </div>
           </form>
         </div>
@@ -315,9 +322,10 @@ desired effect
 
 <!-- jQuery 2.2.3 -->
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/jQuery/fastclick.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
-<script src="../plugins/jQuery/fastclick.js"></script>
+
 <!-- AdminLTE App -->
 <script src="../assets/js/app.min.js"></script>
 <script src="../assets/js/stacktable.js"></script>
@@ -325,89 +333,148 @@ desired effect
 <script src="../assets/js/myJs.js"></script>
 <script>
 
-    $(document).ready(function(){
-   
+$(document).ready(function(){
+      name =   JSON.parse(localStorage.getItem('information'))[0].firstname+' '+JSON.parse(localStorage.getItem('information'))[0].lastname
+      role =JSON.parse(localStorage.getItem('information'))[0].role
+      my_id =JSON.parse(localStorage.getItem('information'))[0].ID
+      $('#divMyList').hide()
+      $('#myStudentNumber').html(' '+role.toUpperCase())
+    $('#myName').html(name)
       $.ajax({
-        url:server+'accounts.php',
+        url:server+'class.php',
         dataType:'JSON',
-        data:{request:'fetch_all'},
+        data:{request:'myclass_summary',id:my_id},
         type:'POST',
         success:function(data){
-          
-          $('#tblBodyMain').empty()
-           
+           $('#tblBodyMain').empty()
             $.each(data,function(k,v){
-              var button1 = "<button class=\"btn btn-sm edit-me btn-warning\" id="+v.id+" username="+v.username+"><span class=\"glyphicon glyphicon-pencil\"></glyphicon></button>"
-              if(v.isDeleted==0){
-              var button2='<button class=\"btn btn-sm delete-me btn-danger\" id="+v.id+" username='+v.username+'><span class=\"glyphicon glyphicon-trash\"></glyphicon></button>'
-              }else{
-                var button2='<button class=\"btn btn-sm recover-me btn-refresh\" id="+v.id+" username='+v.username+'><span class=\"glyphicon glyphicon-refresh\"></glyphicon></button>'
-              }
-              buttons = button1 + ' ' + button2
-              $('#tblBodyMain').append('<tr><td data-title=\"USERNAME\">'+v.username+'</td><td data-title=\"PASSWORD\">'+v.password+'</td><td data-title=\"ROLE\">'+v.role+'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
-            })
+              var button1 = '<button class=\'btn btn-sm view-me btn-danger\' id='+v.id+'><i class=\'glyphicon glyphicon-tasks\'></i></button>'
+          
+           /* if(v.isDeleted==0){
+              var button2='<button class=\'btn btn-sm delete-me btn-danger\' id='+v.id+' ><span class=\'glyphicon glyphicon-trash\'></glyphicon></button>'
+            }else{
+              var button2='<button class=\'btn btn-sm btn-refresh recover-me style=\'background-color:#3c8dbc !important;\'\' id='+v.id+' ><span class=\'glyphicon glyphicon-refresh\'></glyphicon></button>'
+            
+            }
+            */ button2=""
+              var buttons = button1+' '+button2
+              $('#tblBodyMain').append('<tr><td data-title=\"CODE"\>'+v.code+'</td><td data-title=\"TITLE\">'+v.title+'</td><td data-title="UNITS">'+v.units+'</td><td data-title=\"YEAR\">'+v.year+'</td><td data-title=\"SEM\">'+v.sem+'</td><td data-title=\"SIZE\">'+v.count+'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
+              $('.view-me').click(function(){
+                class_id = $(this).attr('id')
+                $('#txtClassId').val(class_id)
 
-
-            $('.edit-me').click(function(){
-              var user = $(this).attr('username')
-                $('#txtUsername').val(user)
-                $('#myModal').modal('show')
-            })
-            $('.delete-me').click(function(){
-              var user = $(this).attr('username')
-
-              var res =confirm("Are you sure you want to delete this account?")
-              if(res==1){
                 $.ajax({
-                   url:server+'accounts.php',
+                  url:server+'subjects.php',
+                  data:{request:'get_criteria_by_class_id',class_id:class_id},
                   dataType:'JSON',
-                  data:{request:'soft_delete',user:user},
                   type:'POST',
                   success:function(data){
-                    if(data[0].MSG=="ACCOUNT DELETED"){
-                      alert(data[0].MSG)
-                      location.reload()
-                    }else{
-                      alert(data[0].MSG)
-                    }
+                      a_total = data[0].a_total 
+                      $('#txtAttendaceTotal').val(a_total)
+                      a_percent = data[0].a_percentage
+                      $('#txtAttendacePercent').val(a_percent)
+
+                      q_total =data[0].q_total
+                      $('#txtQuizTotal').val(q_total)
+                      q_percent =data[0].q_percentage
+                      $('#txtQuizPercent').val(q_percent)
+
+                      p_total = data[0].p_total
+                      $('#txtProjectTotal').val(p_total)
+                      p_percent = data[0].p_percentage
+                      $('#txtProjectPercent').val(p_percent)
+
+                      e_total = data[0].e_total
+                      $('#txtExamsTotal').val(e_total)
+                      e_percent = data[0].e_percentage
+                      $('#txtExamsPercent').val(e_percent)                      
                   }
                 })
-              }  
 
+                $('#divMain').hide(500)
+                $('#divMyList').show(500)
+                $('#modal-fullscreen').modal('show')
+              })
             })
-            $('.recover-me').click(function(){
-              var user = $(this).attr('username')
 
-              var res =confirm("Are you sure you want to recover this account?")
-              if(res==1){
-                $.ajax({
-                   url:server+'accounts.php',
-                  dataType:'JSON',
-                  data:{request:'recover',user:user},
-                  type:'POST',
-                  success:function(data){
-                    if(data[0].MSG=="ACCOUNT RECOVERED"){
-                      alert(data[0].MSG)
-                      location.reload()
-                    }else{
-                      alert(data[0].MSG)
-                    }
-                  }
-                })
-              }  
-
-            })
-                 $('#no-more-tables').DataTable();
+         
+           $('#no-more-tables').DataTable(
+                {  "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]}
+            );
         },
         fail:function(){
           alert('Check Internet Connection');
         }
       })
-
-
-      
-   
 });
+
+
+$('#btnBack').click(function(){
+  $('#divMyList').hide(500)
+  $('#divMain').show(500)
+})
+
+$('#frmMyCriteria').submit(function(e){
+  class_id = $('#txtClassId').val()
+
+  a_total =  parseInt($('#txtAttendaceTotal').val())
+  a_percent =  parseInt($('#txtAttendacePercent').val())
+
+  q_total = parseInt($('#txtQuizTotal').val())
+  q_percent=  parseInt($('#txtQuizPercent').val())
+
+  p_total = parseInt($('#txtProjectTotal').val())
+  p_percent=  parseInt($('#txtProjectPercent').val())
+
+  e_total = parseInt($('#txtExamsTotal').val())
+  e_percent=  parseInt($('#txtExamsPercent').val())
+
+  var total = a_percent+ q_percent +p_percent +e_percent //total to 100
+  var length  = $('.labeled').length
+  var ctr=0
+    $.each($('.labeled'),function(){
+    
+      if($(this).val()==""){
+          $(this).parent().removeClass('has-success')
+        $(this).parent().addClass('has-error')
+      }else{
+        ctr++
+        $(this).parent().removeClass('has-error')
+        $(this).parent().addClass('has-success')
+      }
+    })
+    console.log(total > 0 && total !=100)
+    if(ctr!=length){
+      alert('Please fill all');
+    }else{
+      if(total > 0 && total !=100 ){
+      alert('Total Percentage should be 100')
+      
+      }else if(total==100){
+        
+          //ajax here
+          $.ajax({
+            url:server+'subjects.php',
+            data:{class_id:class_id,
+              a_total:a_total,a_perc:a_percent,
+              p_total:p_total,p_perc:p_percent,
+              q_perc:q_percent,q_total:q_total,
+              e_perc:e_percent,e_total:e_total,
+              request:'criteria'},
+            dataType:'JSON',
+            type:'POST',
+            success:function(data){
+              if(data[0].MSG=="CRITERIA UPDATED"){
+                  alert(data[0].MSG)
+                  location.reload()
+              }
+            }
+          })
+      }
+    }
+  
+  e.preventDefault()
+})
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

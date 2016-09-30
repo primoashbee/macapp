@@ -1,3 +1,180 @@
+
+
+body {
+  background: #72cffa;
+}
+
+/* .modal-transparent */
+
+.modal-transparent {
+  background: transparent;
+}
+.modal-transparent .modal-content {
+  background: transparent;
+}
+.modal-backdrop.modal-backdrop-transparent {
+  background: #ffffff;
+}
+.modal-backdrop.modal-backdrop-transparent.in {
+  opacity: .9;
+  filter: alpha(opacity=90);
+}
+
+/* .modal-fullscreen */
+
+.modal-fullscreen {
+  background: transparent;
+}
+.modal-fullscreen .modal-content {
+  background: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.modal-backdrop.modal-backdrop-fullscreen {
+  background: #ffffff;
+}
+.modal-backdrop.modal-backdrop-fullscreen.in {
+  opacity: .97;
+  filter: alpha(opacity=97);
+}
+
+/* .modal-fullscreen size: we use Bootstrap media query breakpoints */
+
+.modal-fullscreen .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .modal-fullscreen .modal-dialog {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .modal-fullscreen .modal-dialog {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .modal-fullscreen .modal-dialog {
+     width: 1170px;
+  }
+}
+
+/* centering styles for jsbin */
+html,
+body {
+  width:100%;
+  height:100%;
+}
+html {
+  display:table;
+}
+body {
+  display:table-cell;
+  vertical-align:middle;
+}
+body > .btn {
+  display: block;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.modal-fullscreen {
+  background: transparent;
+}
+.modal-fullscreen .modal-content {
+  background: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.modal-backdrop.modal-backdrop-fullscreen {
+  background: #ffffff;
+}
+.modal-backdrop.modal-backdrop-fullscreen.in {
+  opacity: .97;
+  filter: alpha(opacity=97);
+}
+
+/* .modal-fullscreen size: we use Bootstrap media query breakpoints */
+
+
+.modal-fullscreen .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .modal-fullscreen .modal-dialog {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .modal-fullscreen .modal-dialog {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .modal-fullscreen .modal-dialog {
+     width: 1170px;
+  }
+}
+
+
+
+
 .modal {
   text-align: center;
 }
@@ -50,7 +227,7 @@ hr {
     border: none;
     border-bottom: 1px solid #eee; 
     position: relative;
-    padding-left: 38%;
+    padding-left: 45%;
     overflow: auto; 
     white-space: normal;
     text-align:middle;
@@ -72,27 +249,36 @@ hr {
   /*
   Label the data
   */
-  #no-more-tables  td:before { content: attr(data-title); }
- .responsive-tables  thead tr { 
+#no-more-tables  td:before { content: attr(data-title); }
+ /* Force table to not be like tables anymore */
+  #no-more-tables2 table, 
+  #no-more-tables2 thead, 
+  #no-more-tables2 tbody, 
+  #no-more-tables2 th, 
+  #no-more-tables2 td, 
+  #no-more-tables2 tr { 
+    display: block; 
+  }
+#no-more-tables2  thead tr { 
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
  
-  .responsive-tables  tr { border: 1px solid #ccc; }
+  #no-more-tables2  tr { border: 1px solid #ccc; }
  
-  .responsive-tables td { 
+  #no-more-tables2 td { 
     /* Behave  like a "row" */
     border: none;
     border-bottom: 1px solid #eee; 
     position: relative;
-    padding-left: 38%;
+    padding-left: 45%;
     overflow: auto; 
     white-space: normal;
     text-align:middle;
   }
  
-  .responsive-tables   td:before { 
+  #no-more-tables2   td:before { 
     /* Now like a table header */
     position: absolute;
     /* Top/left values mimic padding */
@@ -108,5 +294,97 @@ hr {
   /*
   Label the data
   */
-  .responsive-tables  td:before { content: attr(data-title); }
+  #no-more-tables2  td:before { content: attr(data-title); }
+    #no-more-tables3 table, 
+  #no-more-tables3 thead, 
+  #no-more-tables3 tbody, 
+  #no-more-tables3 th, 
+  #no-more-tables3 td, 
+  #no-more-tables3 tr { 
+    display: block; 
+  }
+#no-more-tables3  thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+ 
+  #no-more-tables3  tr { border: 1px solid #ccc; }
+ 
+  #no-more-tables3 td { 
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 45%;
+    overflow: auto; 
+    white-space: normal;
+    text-align:middle;
+  }
+ 
+  #no-more-tables3   td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+    text-align:left;
+    font-weight: bold;
+  }
+ 
+  /*
+  Label the data
+  */
+  #no-more-tables3  td:before { content: attr(data-title); }
+  .reponsive-tables table, 
+  .reponsive-tables thead, 
+  .reponsive-tables tbody, 
+  .reponsive-tables th, 
+  .reponsive-tables td, 
+  .reponsive-tables tr { 
+    display: block; 
+  }
+ 
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .reponsive-tables  thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+ 
+  .reponsive-tables  tr { border: 1px solid #ccc; }
+ 
+  .reponsive-tables td { 
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 38%;
+    overflow: auto; 
+    white-space: normal;
+    text-align:middle;
+  }
+ 
+  .reponsive-tables   td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+    text-align:left;
+    font-weight: bold;
+  }
+ 
+  /*
+  Label the data
+  */
+.reponsive-tables  td:before { content: attr(data-title); }
+
+
  }

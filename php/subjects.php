@@ -3,7 +3,7 @@ require "config.php";
 session_start();
 
 function checkSubjectIfExist($code){
-require "config.php";
+	require "config.php";
 	$sql = "Select * from subjects where code ='$code'";
 	if(mysqli_num_rows(mysqli_query($conn,$sql))){
 		return true;
@@ -11,6 +11,40 @@ require "config.php";
 		return false;
 	}
 }
+function getCriteriaById($id){
+	require "config.php";
+	$class_id=$id;
+	$sql = "select * from grading_criteria where class_id='$class_id'";
+	$crits[]=array();
+	$res = mysqli_query($conn,$sql);
+	if(mysqli_num_rows($res)){
+		while($data =mysqli_fetch_array($res)){
+				$crits[]=array(
+					 'e_total'=>$data['e_total'],'e_percentage'=>$data['e_percentage'],
+					 'a_total'=>$data['a_total'],'a_percentage'=>$data['a_percentage'],
+					 'p_total'=>$data['p_total'],'p_percentage'=>$data['p_percentage'],
+					 'q_total'=>$data['q_total'],'q_percentage'=>$data['q_percentage']
+					 );
+		}	
+	}else{
+		$sql="Insert into grading_criteria(class_id)values('$class_id')";
+		if(mysqli_query($conn,$sql)){
+				$sql = "select * from grading_criteria where class_id='$class_id'";
+				$crits[]=array();
+				$res = mysqli_query($conn,$sql);
+				while($data =mysqli_fetch_array($res)){
+					$crits[]=array(
+					'e_total'=>$data['e_total'],'e_percentage'=>$data['e_percentage'],
+					'a_total'=>$data['a_total'],'a_percentage'=>$data['a_percentage'],
+					'p_total'=>$data['p_total'],'p_percentage'=>$data['p_percentage'],
+					'q_total'=>$data['q_total'],'q_percentage'=>$data['q_percentage']
+					);
+				}
+		}
+	}
+	return $crits;
+}
+
 $json=array();
 if(!isset($_SESSION['isLoggedIn'])){
 $json[0]=array('MSG'=>'NOT AUTHORIZED');
@@ -64,8 +98,70 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 		if(mysqli_query($conn,$sql)){
 			$json[0]=array('MSG'=>'SUBJECT RECOVERED');
 		}		
+	}else if($req=="criteria"){
+		$class_id=$_POST['class_id'];
+		$e_total = $_POST['e_total'];
+		$e_perc = $_POST['e_perc'];
+		$q_total = $_POST['q_total'];
+		$q_perc = $_POST['q_perc'];
+		$a_total = $_POST['a_total'];
+		$a_perc = $_POST['a_perc'];
+		$p_total = $_POST['p_total'];
+		$p_perc = $_POST['p_perc'];
+		$json[0]=array('MSG'=>'ERROR');
+		$sql = "select * from grading_criteria where class_id='$class_id'";
+		if(mysqli_num_rows(mysqli_query($conn,$sql))){
+				$sql = "update grading_criteria set e_total ='$e_total',e_percentage ='$e_perc', a_total='$a_total', a_percentage='$a_perc',p_total='$p_total',p_percentage='$p_perc',q_total='$q_total',q_percentage='$q_perc' where class_id='$class_id'";
+				if(mysqli_query($conn,$sql)){
+					$json[0]=array('MSG'=>'CRITERIA UPDATED');
+				}
+		}else{
+			$sql ="Insert into grading_criteria(class_id)values('$class_id')";
+			if(mysqli_query($conn,$sql)){
+			$sql = "update grading_criteria set e_total ='$e_total',e_percentage ='$e_perc', a_total='$a_total', a_percentage='$a_perc',p_total='$p_total',p_percentage='$p_perc',q_total='$q_total',q_percentage='$q_perc' where class_id='$class_id'";
+				if(mysqli_query($conn,$sql)){
+					$json[0]=array('MSG'=>'CRITERIA UPDATED');
+				}
+			}
+		}
+
+	}else if($req =="get_criteria_by_class_id"){
+		
+	$class_id=$_POST['class_id'];
+	unset($json);
+	
+	$sql = "select * from grading_criteria where class_id='$class_id'";
+	$crits[]=array();
+	$res = mysqli_query($conn,$sql);
+	if(mysqli_num_rows($res)){
+		while($data =mysqli_fetch_array($res)){
+				$json[]=array(
+					 'e_total'=>$data['e_total'],'e_percentage'=>$data['e_percentage'],
+					 'a_total'=>$data['a_total'],'a_percentage'=>$data['a_percentage'],
+					 'p_total'=>$data['p_total'],'p_percentage'=>$data['p_percentage'],
+					 'q_total'=>$data['q_total'],'q_percentage'=>$data['q_percentage']
+					 );
+		}	
+	}else{
+		$sql="Insert into grading_criteria(class_id)values('$class_id')";
+		if(mysqli_query($conn,$sql)){
+				$sql = "select * from grading_criteria where class_id='$class_id'";
+				$json[]=array();
+				$res = mysqli_query($conn,$sql);
+				while($data =mysqli_fetch_array($res)){
+					$json[]=array(
+					'e_total'=>$data['e_total'],'e_percentage'=>$data['e_percentage'],
+					'a_total'=>$data['a_total'],'a_percentage'=>$data['a_percentage'],
+					'p_total'=>$data['p_total'],'p_percentage'=>$data['p_percentage'],
+					'q_total'=>$data['q_total'],'q_percentage'=>$data['q_percentage']
+					);
+				}
+		}
 	}
+	}	
+		
 	
 }
+
 echo json_encode($json);
 ?>

@@ -27,7 +27,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../assets/css/datatables.css">
 
   <style>
-
+  .selected{
+    background-color:#3c8dbc !important;
+  }
 
   </style>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -165,7 +167,7 @@ desired effect
           <a href="#"><i class="fa fa-user"></i> <span><b>STUDENTS</b></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-            </span>       
+            </span>
           </a>
          
           <ul class="treeview-menu">
@@ -181,7 +183,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <li><a href="add-class.html"><i class="fa fa-plus"></i> Create Class</a></li>
-            <li><a href="view-class.html"><i class="fa fa-eye"></i> View Class</a></li>
+        
           </ul>
         </li>        
       </ul>
@@ -193,7 +195,7 @@ desired effect
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header" id="divMain">
       <h1>
         Classes
         <small>&raquo; List of All Classes</small>
@@ -222,9 +224,53 @@ desired effect
 
     <!-- Main content -->
     <section class="content">
+        <div class="well" id ="divMyList" >
+          <h1> List of Students in the Class </h1>
+         
+         <button class="btn  btn-sm btn-default btn-sm btnBack" id=""><span class="glyphicon glyphicon-chevron-left"> Back </span></button>
+         <button class="btn  btn-sm btn-danger" id="btnDeleteList">Delete <span class="glyphicon glyphicon-trash"></span></button>
+         <br>
+         <br>
+          <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables2" >
+            <thead class="cf" >
+              <tr>
+                  
+                  <th>Name</th>
+                
+                 
 
-      <!-- Your Page Content Here -->
+              </tr>
+            </thead>
+            <tbody  id="tblStudentBody">
 
+            </tbody>
+         </table>
+
+        </div >
+       <div class="well" id ="divToAdd" >
+          <h1> List of Students </h1>
+          <h4> &raquo; Add Student to this Class </h4>
+         
+         <button class="btn  btn-sm btn-default btn-sm btnBack" ><span class="glyphicon glyphicon-chevron-left"> Back </span></button>
+         <button class="btn  btn-sm btn-success" id="btnAddThem">Add To Class <span class="glyphicon glyphicon-trash"></span></button>
+         <br>
+         <br>
+          <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables3" >
+            <thead class="cf" >
+              <tr>
+                  
+                  <th>Name</th>
+                
+                 
+
+              </tr>
+            </thead>
+            <tbody  id="tblAddStudentBody">
+
+            </tbody>
+         </table>
+
+        </div >
     </section>
     <!-- /.content -->
   </div>
@@ -277,38 +323,6 @@ desired effect
   <div class="control-sidebar-bg"></div>
 
   <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Students in Class</h4>   
-        </div>
-        <div class="modal-body">
-             <table class="table table-bordered table-striped table-condensed cf responsive-tables" id ="tblMyStudentListView">
-                      <thead class="cf">
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastyear</th>
-                            <th>Action</th>
-
-                        </tr>
-                      </thead>
-                      <tbody  id="tblStudentBody">
-
-                      </tbody>
-              </table>
-        <div class="modal-footer">
-       
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-      </div>
-    </div>
-</div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
@@ -317,6 +331,8 @@ desired effect
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../plugins/jQuery/fastclick.js"></script>
+<script src="../plugins/jQuery/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="../assets/js/app.min.js"></script>
 <script src="../assets/js/stacktable.js"></script>
@@ -324,9 +340,16 @@ desired effect
 <script src="../assets/js/myJs.js"></script>
 <script>
 var teachers = []
+var toRemove =[]
+var toAdd=[]
 var lists=[]
 var x=[]
+var students=[]
+var class_id_to_add
     $(document).ready(function(){
+      isLoggedIn()
+    $('#divMyList').hide()
+    $('#divToAdd').hide()
     $.ajax({
         url:server+'teachers.php',
         dataType:'JSON',
@@ -334,140 +357,189 @@ var x=[]
         type:'POST',
         success:function(data){
           teachers=data
+
           } 
-        })
-      $.ajax({
-        url:server+'class.php',
-        dataType:'JSON',
-        data:{request:'fetch_all'},
-        type:'POST',
-        success:function(data){
-          lists = data
-          $('#tblBodyMain').empty()
-            $.each(data,function(k,v){
+    })
 
-              var button1 = '<button class=\'btn btn-sm view-me btn-default\' id='+v.id+' code="'+v.code+'" title="'+v.title+'" units="'+v.units+'" year="'+v.year+'" sem="'+v.sem+'" teacher = "'+v.teacher+'" t_id="'+v.t_id+'"><span class=\'glyphicon glyphicon-eye-open  \'></glyphicon></button>'
-           
-              var button2='<button class=\'btn btn-sm btn-refresh add-students style=\'background-color:#3c8dbc !important;\'\' id='+v.id+' ><span class=\'glyphicon glyphicon-plus\'></glyphicon></button>'
-            
-           
-              var buttons = button1+' '+button2
-              $('#tblBodyMain').append('<tr><td data-title=\"CODE\">'+v.code+'</td><td data-title=\"TITLE\">'+v.title+'</td><td data-title=\"UNITS\">'+v.units+'</td><td data-title=\"YEAR\">'+v.year+'</td><td data-title=\"SEMESTER\">'+v.sem+'</td><td data-title=\"TEACHER\">'+v.teacher+'</td><td data-title=\"CLASS SIZE"\ >'+v.count +'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
-            })
-            $('.edit-me').click(function(){
-              var z;
-              var code = $(this).attr('code')
-              var title = $(this).attr('title')
-              var units = $(this).attr('units')
-              var year = $(this).attr('year')
-              var teacher = $(this).attr('teacher')
-              var semester = $(this).attr('sem')
-              var t_id = $(this).attr('t_id')
-                $('#txtCode').val(code)
-                $('#txtTitle').val(title)
-                $('#txtUnits').val(units)
-                $('#txtYear').val(year)
-                $('#txtTeacher').val(teacher)
-                $('#txtSemester').val(semester)
-                $('#txtTeacher').empty()
-                $('#txtTeacher').append('<option value="'+t_id+'">'+teacher+'</td>')
-                $.each(teachers,function(k,v){
-                  if(t_id!=v.id){
-                    $('#txtTeacher').append('<option value="'+v.id+'">'+v.name+'</td>')
-                  }
-                })
-                $('#myModal').modal('show')
-              })
-            $('.view-me').click(function(){
-              var id = $(this).attr('id')
-                $.ajax({
-                  url:server+'class.php',
-                  data:{id:id,request:'get_list_by_id'},
-                  dataType:'JSON',
-                  type:'POST',
-                  success:function(data){
-                    x= data
-                   $('#tblStudentBody').empty()
-                   $.each(data,function(k,v){
-                   var button = '<button class="btn btn-sm btn-danger" id='+v.id+'><span class="glyphicon glyphicon-remove"></span></button>'
-                   $('#tblStudentBody').append('<tr><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="LASTNAME">'+v.lname+'</td><td data-title="ACTION">'+button+'</td></tr>')
-                   })
-                   $('#myModal').modal('show')
-                   $('#tblMyStudentListView').DataTable();
-                  }
-                })
+    $.ajax({
+      url:server+'students.php',
+      dataType:'JSON',
+      data:{request:'fetch_all'},
+      type:'POST',
+      success:function(data){
+          students=data
+          $('#tblAddStudentBody').empty()
               
-           
-            })
-            $('.recover-me').click(function(){
-              var res = confirm('Are you sure you want to recover this subject?')
-              var id = $(this).attr('id')
+          $.each(students,function(k,v){
+          $('#tblAddStudentBody').append('<tr class="trToAdd" id='+v.id+' status="false"><td data-title="NAME">'+v.fname + ' ' + v.lname+'</td></tr>')
+              
+          })
+            $('.trToAdd').click(function(){
+                  var id = $(this).attr('id');
+                  
+                  if($(this).attr('status')=='false'){
+                  toAdd.push(id)
+                  $(this).addClass('selected')
+                  $(this).attr('status','true')
+                  }else{
+                  toAdd.pop(id)
+                  $(this).removeClass('selected')
+                  
+                   $(this).attr('status','false')
+                  }
+                })
 
-              if(res == true){
-                $.ajax({
-                  url:server+'subjects.php',
-                  data:{id:id,request:'recover_subject'},
-                  dataType:'JSON',
-                  type:'POST',
-                  success:function(data){
-                    if(data[0].MSG=="SUBJECT RECOVERED"){
+          $('#no-more-tables3').DataTable()
+        } 
+    })
+    $.ajax({
+      url:server+'class.php',
+      dataType:'JSON',
+      data:{request:'fetch_all'},
+      type:'POST',
+      success:function(data){
+        lists = data
+        $('#tblBodyMain').empty()
+          $.each(data,function(k,v){
+
+            var button1 = '<a href="#divMyList" id="haha"><button class=\'btn btn-sm view-me btn-default\' id='+v.id+' code="'+v.code+'" title="'+v.title+'" units="'+v.units+'" year="'+v.year+'" sem="'+v.sem+'" teacher = "'+v.teacher+'" t_id="'+v.t_id+'"><span class=\'glyphicon glyphicon-eye-open  \'></glyphicon></button></a>'
+         
+            var button2='<button class=\'btn btn-sm btn-refresh add-students style=\'background-color:#3c8dbc !important;\'\' id='+v.id+' ><span class=\'glyphicon glyphicon-plus\'></glyphicon></button>'
+          
+         
+            var buttons = button1+' '+button2
+            $('#tblBodyMain').append('<tr></td><td data-title=\"CODE\">'+v.code+'</td><td data-title=\"TITLE\">'+v.title+'</td><td data-title=\"UNITS\">'+v.units+'</td><td data-title=\"YEAR\">'+v.year+'</td><td data-title=\"SEMESTER\">'+v.sem+'</td><td data-title=\"TEACHER\">'+v.teacher+'</td><td data-title=\"CLASS SIZE"\ >'+v.count +'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
+          })
+
+          $('.view-me').click(function(e){
+            var id = $(this).attr('id')
+            var link = $(this).parent().attr('href')
+              $.ajax({
+                url:server+'class.php',
+                data:{id:id,request:'get_list_by_id'},
+                dataType:'JSON',
+                type:'POST',
+                success:function(data){
+                 
+                x= data
+                 $('#tblStudentBody').empty()
+                 $.each(data,function(k,v){
+                   var button = '<button class="btn btn-sm btn-danger" id='+v.id+'><span class="glyphicon glyphicon-remove"></span></button>'
+                   $('#tblStudentBody').append('<tr class="checkbox" class_id='+v.id+'  status="false"><td data-title="NAME"><span style="font-weight:10px">'+v.fname+' '+v.lname+'</span></td></tr>')
+                 })
+                $('.checkbox').click(function(){
+                  var id = $(this).attr('class_id');
+                
+                  if($(this).attr('status')=='false'){
+                  toRemove.push(id)
+                  $(this).addClass('selected')
+                  $(this).attr('status','true')
+                  }else{
+                  toRemove.pop(id)
+                  $(this).removeClass('selected')
+                  
+                   $(this).attr('status','false')
+                  }
+                })
+
+                $('#divMyList').show()
+                $('#divMain').hide()
+                $('html, body').animate({
+                      scrollTop: $(link) .offset().top
+                  }, 1500);
+                
+                $('#no-more-tables2').DataTable();
+                }
+              })
+            
+         
+          })
+          $('.recover-me').click(function(){
+            var res = confirm('Are you sure you want to recover this subject?')
+            var id = $(this).attr('id')
+
+            if(res == true){
+              $.ajax({
+                url:server+'subjects.php',
+                data:{id:id,request:'recover_subject'},
+                dataType:'JSON',
+                type:'POST',
+                success:function(data){
+                  alert(data.MSG)
+                 
+
+                }
+              })
+            }
+         
+          })
+
+          $('.add-students').click(function(){
+            class_id=$(this).attr('id')
+
+            $('#divMain').hide()
+            $('#divToAdd').show()
+          })
+
+               $('#no-more-tables').DataTable();
+     
+      }
+    })
+   
+});
+    $("#btnDeleteList").click(function(){
+      if(toRemove.length==0){
+        alert('Select from the list first')
+      }else{
+        var res = confirm('Delete students is permanent. Are you sure?')
+        if(res==true){
+          $.ajax({
+            url:server+'class.php',
+            data:{list:toRemove,request:'remove_from_class'},
+            dataType:'JSON',
+            type:'POST',
+            success:function(data){
+               if(data[0].MSG=="STUDENT REMOVED"){
                       alert(data[0].MSG)
                       location.reload()
                     }else{
                       alert(data[0].MSG)
                     }
-
-                  }
-                })
-              }
-           
-            })            
-                 $('#no-more-tables').DataTable();
+            }
+          })
         }
-      })
-   
-});
-
-    $("#frmUpdateSubject").submit(function(e){
-      var total = $('.req').length
-      var ctr =0
-      var code = $("#txtCode").val()
-      var title = $("#txtTitle").val()
-      var units = $("#txtUnits").val()
-      var year = $("#txtYear").val()
-      var sem = $("#txtSemester").val()
-      var teacher_id = $("#txtTeacher").val()
-
-
-        $.each($('.req'),function(k,v){
-          if($(this).val()==""){
-            $(this).parent().addClass('has-error')
-          }else{
-            ctr++
-            $(this).parent().addClass('has-success ')
-
-          }
-        })
-        if(ctr==total){
+      }
+    })
+    $('.btnBack').click(function(){
+      $('#divToAdd').hide()
+      $('#divMyList').hide()
+      $('#divMain').show()
+    })
+    $('#btnAddThem').click(function(){
+      if(toAdd.length==0){
+        alert('Select from the list first')
+      }else{
           $.ajax({
-            url:server+'subjects.php',
-            data:{teacher_id:teacher_id,code:code,title:title,units:units,year:year,sem:sem,request:'update_subject'},
+            url:server+'class.php',
+            data:{list:toAdd,subject_id:class_id,request:'add_to_class'},
             dataType:'JSON',
             type:'POST',
             success:function(data){
-              if(data[0].MSG=="SUBJECT UPDATED"){
-                alert(data[0].MSG)
-                location.reload()
-              }else{
-                alert(data[0].MSG)
-              }
+               if(data[0].MSG=="STUDENT ADDED TO CLASS"){
+                      alert(data[0].MSG)
+                      location.reload()
+                    }else{
+                      alert(data[0].MSG)
+                    }
             }
           })
-        }else{
-          alert('Please fill all fields')
-        }
-      e.preventDefault()
+        
+      }
     })
+
+
+    
+
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

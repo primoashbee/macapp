@@ -104,6 +104,37 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 		if(mysqli_query($conn,$sql)){
 			$json[0]=array('MSG'=>'ACCOUNT RECOVERED');
 		}
+	}else if($request=="change_pass"){
+
+		$username = mysql_escape_string($_POST['username']);
+		$oldpass  = mysql_escape_string($_POST['oldpass']);
+		$newpass1 = mysql_escape_string($_POST['newpass']);
+		$newpass2 = mysql_escape_string($_POST['newpass2']);
+			if($newpass1!=$newpass2){
+				$json[0]=array('MSG'=>'PASSWORD MUST MATCH');
+				
+			}else{
+			$sql ="Select * from users where username = '$username'";
+
+			$data = mysqli_fetch_row(mysqli_query($conn,$sql));
+			
+			$o_pass = $data[2];
+			
+			
+				if($o_pass==$oldpass){
+					$sql="Update users set passkey='$newpass1' where username ='$username'";
+						
+					if(mysqli_query($conn,$sql)){
+
+
+						$json[0]=array('MSG'=>'PASSWORD CHANGE SUCCESSFUL');
+					}else{
+						$json[0]=array('MSG'=>'ERROR');
+					}
+				}else{
+					$json[0]=array('MSG'=>'OLD PASSWORD DID NOT MATCH');
+				}
+			}
 	}
 }
 echo json_encode($json);

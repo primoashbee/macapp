@@ -19,9 +19,9 @@ if(mysqli_num_rows($res)){
 	while($data=mysqli_fetch_array($res)){
 
 		if($data['role']=='student'){
-			$json[]=array('MSG'=>1,'USERNAME'=>$data['username'],'role'=>$data['role'],'firstname'=>$data['firstname'],'lastname'=>$data['lastname'],'age'=>$data['age'],'course'=>$data['course'],'sex'=>$data['sex'],'email'=>$data['email']);
+			$json[]=array('MSG'=>1,'ID'=>$data['id'],'USERNAME'=>$data['username'],'role'=>$data['role'],'firstname'=>$data['firstname'],'lastname'=>$data['lastname'],'age'=>$data['age'],'course'=>$data['course'],'sex'=>$data['sex'],'email'=>$data['email']);
 		}elseif($data['role']=='teacher'){
-			$json[]=array('MSG'=>1,'USERNAME'=>$data['username'],'role'=>$data['role'],'firstname'=>$data['firstname'],'lastname'=>$data['lastname'],'age'=>$data['age'],'sex'=>$data['sex'],'email'=>$data['email']);
+			$json[]=array('MSG'=>1,'ID'=>$data['id'],'USERNAME'=>$data['username'],'role'=>$data['role'],'firstname'=>$data['firstname'],'lastname'=>$data['lastname'],'age'=>$data['age'],'sex'=>$data['sex'],'email'=>$data['email']);
 		}else{
 			$json[]=array('MSG'=>1,'USERNAME'=>$data['username'],'role'=>$data['role']);
 		}
