@@ -27,9 +27,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../assets/css/datatables.css">
 
   <style>
-  .labeled{
-   margin-left:10px;
-  }
+
 
   </style>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -159,7 +157,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header" id="divMain">
       <h1>
-      My Class 
+      My Class Loads
         <small>&raquo; List of my Classes</small>
       </h1>
       <div class="well">
@@ -182,52 +180,32 @@ desired effect
               </table>
       </div>
     </section>
-<form id="frmMyCriteria">
+
     <!-- Main content -->
     <section class="content" id ="divMyList">
       <div class="well">
-        <h1><span id="lblSubjectInfo"></span></h1>
-         <h4><center><b>Set up</b> your <b>GRADING CRITERIA</b></center></h4>
-      <button class="btn btn-default" id="btnBack" type="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-          <div class="form-group">
-            <h4><center>Attendance</center></h4>
-            <input type="hidden" id="txtClassId">
-            <hr>
-            <label for="txtAttendanceTotal">Total Points</label>
-            <input type="number" min=1 id ="txtAttendaceTotal" class="form-control labeled">
-            <label for="txtAttendancePercent">Percentage (%)</label>
-            <input type="number" min=1 id ="txtAttendacePercent" class="form-control labeled">
-          </div>      
-          <div class="form-group">
-            <h4><center>Quiz</center></h4>
-            <hr>
-            <label for="txtQuizTotal">Total Points</label>
-            <input type="number" min=1 id ="txtQuizTotal" class="form-control labeled">
-            <label for="txtQuizPercent">Percentage (%)</label>
-            <input type="number" min=1 id ="txtQuizPercent" class="form-control labeled">
-          </div>  
-          <div class="form-group">
-            <h4><center>Project</center></h4>
-            <hr>
-            <label for="txtProjectTotal">Total Points</label>
-            <input type="number" min=1 id ="txtProjectTotal" class="form-control labeled">
-            <label for="txtProjectPercent">Percentage (%)</label>
-            <input type="number" min=1 id ="txtProjectPercent" class="form-control labeled">
-          </div>    
-          <div class="form-group">
-            <h4><center>Exams</center></h4>
-            <hr>
-            <label for="txtExamsTotal">Total Points</label>
-            <input type="number" min=1 id ="txtExamsTotal" class="form-control labeled">
-            <label for="txtExamsPercent">Percentage (%)</label>
-            <input type="number" min=1 id ="txtExamsPercent" class="form-control labeled">
-          </div>
-          <button type="submit" class="btn form-control btn-success">Save</button>
+        <h1>
+      <span id="lblSubjectInfo"></span>
+        <small> &raquo; List of Students</small>
+
+      </h1>
+      <button class="btn btn-default" id="btnBack"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+              <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables2">
+                      <thead class="cf">
+                        <tr>
+                          <th>Lastname</th>
+                          <th>Firstname</th>
+                          <th>Add Grades</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tblStudentList">
+
+                      </tbody>
+              </table>      
       </div>
       <!-- Your Page Content Here -->
 
     </section>
-</form>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -286,26 +264,49 @@ desired effect
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update Account</h4>   
+          <h4 class="modal-title">UPDATE GRADE</h4>   
         </div>
         <div class="modal-body">
-          <form id="frmUpdateAccount">
-            <div class="form-group">
-              <label for="txtUsername">Username</label>
-              <input type="text" id="txtUsername" class="form-control req" readonly="">
-            </div>
-            <div class="form-group">
-              <label for="txtOldPass">Password</label>
-              <input type="text" id="txtOldPass" class="form-control req" placeholder="Old Password">
-            </div>
-            <div class="form-group">
-              <label for="txtNewPassword">New Password</label>
-              <input type="text" id="txtNewPassword" class="form-control req" placeholder="New Password">
-            </div>
-            <div class="form-group">
-              <label for="txtNewPasswordConfirm">New Password</label>
-              <input type="text" id="txtNewPasswordConfirm" class="form-control req" placeholder="Confirm Password">
-            </div>
+          <form id="frmMyCriteria">
+              <!-- Main content -->
+            
+                <div class="">
+                  <h1><span id="lblSubjectInfo"></span></h1>
+                   <h3><center><b><span id="lblStudentName">Ashbee Morgado</span></b></center></h3>
+                   <h4><center><b><span id="lblCode">CCS1101</span></b></center></h4>
+                   <h4><center><b><span id="lblTitle">PROGRAMMING</span></b></center></h4>
+                   <h6><center><b><span id="lblTerm">TERM</span></b></center></h6>
+                <button class="btn btn-default" id="btnBack" type="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                    <div class="form-group">
+                      <h4><center>Attendance</center></h4>
+                      <input type="hidden" id="txtClassId">
+                      <hr>
+                      <label for="txtAttendanceTotal">Total Points</label>
+                      <input type="number" min=1 id ="txtAttendaceTotal" class="form-control labeled">
+                    </div>      
+                    <div class="form-group">
+                      <h4><center>Quiz</center></h4>
+                      <hr>
+                      <label for="txtQuizTotal">Total Points</label>
+                      <input type="number" min=1 id ="txtQuizTotal" class="form-control labeled">
+                    </div>  
+                    <div class="form-group">
+                      <h4><center>Project</center></h4>
+                      <hr>
+                      <label for="txtProjectTotal">Total Points</label>
+                      <input type="number" min=1 id ="txtProjectTotal" class="form-control labeled">
+                    </div>    
+                    <div class="form-group">
+                      <h4><center>Exams</center></h4>
+                      <hr>
+                      <label for="txtExamsTotal">Total Points</label>
+                      <input type="number" min=1 id ="txtExamsTotal" class="form-control labeled">
+                    </div>
+                    <button type="submit" class="btn form-control btn-success">Save</button>
+                </div>
+                <!-- Your Page Content Here -->
+
+             
           </form>
         </div>
         <div class="modal-footer">
@@ -332,7 +333,7 @@ desired effect
 <script src="../assets/js/datatable.js"></script>
 <script src="../assets/js/myJs.js"></script>
 <script>
-
+var subject_code,subject_title,student_name,e_perc,e_total,q_perc,q_total,a_perc,a_total,p_perc,p_total
 $(document).ready(function(){
       name =   JSON.parse(localStorage.getItem('information'))[0].firstname+' '+JSON.parse(localStorage.getItem('information'))[0].lastname
       role =JSON.parse(localStorage.getItem('information'))[0].role
@@ -348,7 +349,7 @@ $(document).ready(function(){
         success:function(data){
            $('#tblBodyMain').empty()
             $.each(data,function(k,v){
-              var button1 = '<button class=\'btn btn-sm view-me btn-danger\' id='+v.id+'><i class=\'glyphicon glyphicon-tasks\'></i></button>'
+              var button1 = '<button class=\'btn btn-sm view-me btnv-default\' id='+v.id+' code="'+v.code+'" title ="'+v.title+'" e_perc='+v.criteria.e_percentage+' e_total='+v.criteria.e_total+' q_perc='+v.criteria.q_percentage+' q_total='+v.criteria.q_total+' a_perc='+v.criteria.a_percentage+' a_total='+v.criteria.a_total+' p_perc='+v.criteria.p_percentage+' p_total='+v.criteria.p_total+'><span class=\'glyphicon glyphicon-eye-open\'></glyphicon></button>'
           
            /* if(v.isDeleted==0){
               var button2='<button class=\'btn btn-sm delete-me btn-danger\' id='+v.id+' ><span class=\'glyphicon glyphicon-trash\'></glyphicon></button>'
@@ -361,33 +362,50 @@ $(document).ready(function(){
               $('#tblBodyMain').append('<tr><td data-title=\"CODE"\>'+v.code+'</td><td data-title=\"TITLE\">'+v.title+'</td><td data-title="UNITS">'+v.units+'</td><td data-title=\"YEAR\">'+v.year+'</td><td data-title=\"SEM\">'+v.sem+'</td><td data-title=\"SIZE\">'+v.count+'</td><td data-title=\"ACTIONS\">'+buttons+'</td></tr>')
               $('.view-me').click(function(){
                 class_id = $(this).attr('id')
-                $('#txtClassId').val(class_id)
 
+                subject_title=$(this).attr('title')
+                subject_code=$(this).attr('code')
+
+                a_perc = $(this).attr('a_perc')
+                a_total = $(this).attr('a_total')
+                
+                p_perc = $(this).attr('p_perc')
+                p_total = $(this).attr('p_total')
+
+                e_perc = $(this).attr('e_perc')
+                e_total = $(this).attr('e_total')
+
+                q_perc = $(this).attr('q_perc')
+                q_total = $(this).attr('q_total')
+         
                 $.ajax({
-                  url:server+'subjects.php',
-                  data:{request:'get_criteria_by_class_id',class_id:class_id},
+                  url:server+'class.php',
+                  data:{request:'get_list_by_id',id:class_id},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
-                      a_total = data[0].a_total 
-                      $('#txtAttendaceTotal').val(a_total)
-                      a_percent = data[0].a_percentage
-                      $('#txtAttendacePercent').val(a_percent)
+                    $("#no-more-tables2").DataTable().destroy()
+                    $('#tblStudentList').empty()
+                    var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
+                    '<button class="btn btn-sm btn-refresh addGrade " room_id='+v.id+' term="midterm" name="'+v.fname+' '+v.lname+'">M</button> '+
+                    '<button class="btn btn-sm btn-warning addGrade " room_id='+v.id+' term="prefinals" name="'+v.fname+' '+v.lname+'">PF</button> '+
+                    '<button class="btn btn-sm btn-danger addGrade " room_id='+v.id+' term="finals" name="'+v.fname+' '+v.lname+'">F</button> '
+                    $.each(data,function(k,v){
+                      $('#tblStudentList').append('<tr><td data-title="LASTNAME">'+v.lname+'</td><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="GRADING">'+s_buttons+'</td></tr>')
+                    })
 
-                      q_total =data[0].q_total
-                      $('#txtQuizTotal').val(q_total)
-                      q_percent =data[0].q_percentage
-                      $('#txtQuizPercent').val(q_percent)
+                    $(".addGrade").click(function(){
 
-                      p_total = data[0].p_total
-                      $('#txtProjectTotal').val(p_total)
-                      p_percent = data[0].p_percentage
-                      $('#txtProjectPercent').val(p_percent)
-
-                      e_total = data[0].e_total
-                      $('#txtExamsTotal').val(e_total)
-                      e_percent = data[0].e_percentage
-                      $('#txtExamsPercent').val(e_percent)                      
+                      term = $(this).attr('term')
+                      name = $(this).attr('name')
+                      $('#lblTerm').html(term)
+                      $('#lblStudentName').html(student_name)
+                      $('#lblCode').html(subject_code)
+                      $('#lblTitle').html(subject_title)
+                      $('#myModal').modal('show')
+                    })
+ 
+                    $("#no-more-tables2").DataTable()
                   }
                 })
 
@@ -396,6 +414,7 @@ $(document).ready(function(){
                 $('#modal-fullscreen').modal('show')
               })
             })
+
          
            $('#no-more-tables').DataTable(
                 {  "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]}
@@ -411,68 +430,6 @@ $(document).ready(function(){
 $('#btnBack').click(function(){
   $('#divMyList').hide(500)
   $('#divMain').show(500)
-})
-
-$('#frmMyCriteria').submit(function(e){
-  class_id = $('#txtClassId').val()
-
-  a_total =  parseInt($('#txtAttendaceTotal').val())
-  a_percent =  parseInt($('#txtAttendacePercent').val())
-
-  q_total = parseInt($('#txtQuizTotal').val())
-  q_percent=  parseInt($('#txtQuizPercent').val())
-
-  p_total = parseInt($('#txtProjectTotal').val())
-  p_percent=  parseInt($('#txtProjectPercent').val())
-
-  e_total = parseInt($('#txtExamsTotal').val())
-  e_percent=  parseInt($('#txtExamsPercent').val())
-
-  var total = a_percent+ q_percent +p_percent +e_percent //total to 100
-  var length  = $('.labeled').length
-  var ctr=0
-    $.each($('.labeled'),function(){
-    
-      if($(this).val()==""){
-          $(this).parent().removeClass('has-success')
-        $(this).parent().addClass('has-error')
-      }else{
-        ctr++
-        $(this).parent().removeClass('has-error')
-        $(this).parent().addClass('has-success')
-      }
-    })
-    console.log(total > 0 && total !=100)
-    if(ctr!=length){
-      alert('Please fill all');
-    }else{
-      if(total > 0 && total !=100 ){
-      alert('Total Percentage should be 100')
-      
-      }else if(total==100){
-        
-          //ajax here
-          $.ajax({
-            url:server+'subjects.php',
-            data:{class_id:class_id,
-              a_total:a_total,a_perc:a_percent,
-              p_total:p_total,p_perc:p_percent,
-              q_perc:q_percent,q_total:q_total,
-              e_perc:e_percent,e_total:e_total,
-              request:'criteria'},
-            dataType:'JSON',
-            type:'POST',
-            success:function(data){
-              if(data[0].MSG=="CRITERIA UPDATED"){
-                  alert(data[0].MSG)
-                  location.reload()
-              }
-            }
-          })
-      }
-    }
-  
-  e.preventDefault()
 })
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

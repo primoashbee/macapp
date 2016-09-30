@@ -36,6 +36,39 @@ function StudentIsInClass($student_id,$subject_id){
 		return false;
 	}
 }
+function getCriteriaById($id){
+	require "config.php";
+	$class_id=$id;
+	$sql = "select * from grading_criteria where class_id='$class_id'";
+	$crits[]=array();
+	$res = mysqli_query($conn,$sql);
+	if(mysqli_num_rows($res)){
+		while($data =mysqli_fetch_array($res)){
+				$crits[0]=array(
+					 'e_total'=>$data['e_total'],'e_percentage'=>$data['e_percentage'],
+					 'a_total'=>$data['a_total'],'a_percentage'=>$data['a_percentage'],
+					 'p_total'=>$data['p_total'],'p_percentage'=>$data['p_percentage'],
+					 'q_total'=>$data['q_total'],'q_percentage'=>$data['q_percentage']
+					 );
+		}	
+	}else{
+		$sql="Insert into grading_criteria(class_id)values('$class_id')";
+		if(mysqli_query($conn,$sql)){
+				$sql = "select * from grading_criteria where class_id='$class_id'";
+				$crits[]=array();
+				$res = mysqli_query($conn,$sql);
+				while($data =mysqli_fetch_array($res)){
+					$crits[0]=array(
+					'e_total'=>$data['e_total'],'e_percentage'=>$data['e_percentage'],
+					'a_total'=>$data['a_total'],'a_percentage'=>$data['a_percentage'],
+					'p_total'=>$data['p_total'],'p_percentage'=>$data['p_percentage'],
+					'q_total'=>$data['q_total'],'q_percentage'=>$data['q_percentage']
+					);
+				}
+		}
+	}
+	return $crits[0];
+}
 if(!isset($_SESSION['isLoggedIn'])){
 $json[0]=array('MSG'=>'NOT AUTHORIZED');
 }else{
@@ -53,8 +86,8 @@ $req = $_POST['request'];
 	
 		$res = mysqli_query($conn,$sql);
 			while($data=mysqli_fetch_array($res)){
-			
-			$json[]=array('id'=>$data['id'],'code'=>$data['code'],'title'=>$data['title'],'units'=>$data['units'],'year'=>$data['year'],'sem'=>$data['sem'],'acad_year'=>$data['acad_year'],'teacher'=>$data['firstname']." ".$data['lastname'],'t_id'=>$data['t_id'],'isDeleted'=>$data['isdeleted'],'count'=>$data['student_count']);
+			$criteria[0]=getCriteriaById($data['id']);
+			$json[]=array('id'=>$data['id'],'code'=>$data['code'],'title'=>$data['title'],'units'=>$data['units'],'year'=>$data['year'],'sem'=>$data['sem'],'acad_year'=>$data['acad_year'],'teacher'=>$data['firstname']." ".$data['lastname'],'t_id'=>$data['t_id'],'isDeleted'=>$data['isdeleted'],'count'=>$data['student_count'],'criteria'=>$criteria[0]);
 			}			
 
 	}else if($req=="get_list_by_id"){
