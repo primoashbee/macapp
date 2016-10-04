@@ -1,7 +1,6 @@
 <?php 
 require "config.php";
 session_start();
- header('Access-Control-Allow-Origin: *'); 
 $json=array();
 
 function getStudentList($id){
@@ -70,9 +69,7 @@ function getCriteriaById($id){
 	}
 	return $crits[0];
 }
-if(!isset($_SESSION['isLoggedIn'])){
-$json[0]=array('MSG'=>'NOT AUTHORIZED');
-}else{
+
 $req = $_POST['request'];
 	if($req == "fetch_all"){
 		$sql = "Select * from class_summary";
@@ -144,6 +141,6 @@ $req = $_POST['request'];
 			$conn_trans->rollback();
 		}
 	}
-}
+
 echo json_encode($json);
 ?>

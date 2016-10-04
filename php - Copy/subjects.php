@@ -1,7 +1,7 @@
 <?php 
 require "config.php";
 session_start();
- header('Access-Control-Allow-Origin: *'); 
+
 function checkSubjectIfExist($code){
 	require "config.php";
 	$sql = "Select * from subjects where code ='$code'";
@@ -46,9 +46,7 @@ function getCriteriaById($id){
 }
 
 $json=array();
-if(!isset($_SESSION['isLoggedIn'])){
-$json[0]=array('MSG'=>'NOT AUTHORIZED');
-}else{
+
 	$req = $_POST['request'];
 	if($req == "fetch_all"){
 		$sql = "Select * from subject_information";
@@ -171,7 +169,7 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 	}	
 		
 	
-}
+
 
 echo json_encode($json);
 ?>

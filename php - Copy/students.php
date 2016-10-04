@@ -1,10 +1,7 @@
 <?php require "config.php";
 session_start();
 $json=array();
- header('Access-Control-Allow-Origin: *'); 
-if(!isset($_SESSION['isLoggedIn'])){
-$json[0]=array('MSG'=>'NOT AUTHORIZED');
-}else{
+
 	if($_POST['request']=="fetch_all"){
 		$sql = "Select * from qrystudentinformation";
 		$res = mysqli_query($conn,$sql);
@@ -30,6 +27,6 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 			$json[0]=array('MSG'=>(mysqli_error($conn)));
 		}
 	}
-}
+
 echo json_encode($json);
 ?>

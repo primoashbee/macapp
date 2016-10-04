@@ -267,7 +267,7 @@ desired effect
           <h4 class="modal-title">UPDATE GRADE</h4>   
         </div>
         <div class="modal-body">
-          <form id="frmMyCriteria">
+          <form id="frmUpdateGrade">
               <!-- Main content -->
             
                 <div class="">
@@ -277,31 +277,46 @@ desired effect
                    <h4><center><b><span id="lblTitle">PROGRAMMING</span></b></center></h4>
                    <h6><center><b><span id="lblTerm">TERM</span></b></center></h6>
                 <button class="btn btn-default" id="btnBack" type="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                    <hr>
                     <div class="form-group">
                       <h4><center>Attendance</center></h4>
                       <input type="hidden" id="txtClassId">
-                      <hr>
-                      <label for="txtAttendanceTotal">Total Points</label>
-                      <input type="number" min=1 id ="txtAttendaceTotal" class="form-control labeled">
+                    
+                      <label for="txtAttendanceTotal"><b><span id ="lblAttTotal"></span><b></label>
+                      <input type="number" min=1 id ="txtAttendaceTotal" class="form-control labeled"  total = 0 percentage=0 required>
+                      <label id="computedAtt"></label>
                     </div>      
+                    <hr>
                     <div class="form-group">
                       <h4><center>Quiz</center></h4>
-                      <hr>
-                      <label for="txtQuizTotal">Total Points</label>
-                      <input type="number" min=1 id ="txtQuizTotal" class="form-control labeled">
-                    </div>  
+                    
+                      <label for="txtQuizTotal"><b><span id ="lblQuizTotal"></span><b></label>
+                      <input type="number" min=1 id ="txtQuizTotal" class="form-control labeled" total = 0 percentage=0 required>
+                      <label id="computedQuiz"></label>
+                    </div>
+                    <hr>  
                     <div class="form-group">
                       <h4><center>Project</center></h4>
-                      <hr>
-                      <label for="txtProjectTotal">Total Points</label>
-                      <input type="number" min=1 id ="txtProjectTotal" class="form-control labeled">
+                      <label for="txtProjectTotal"><b><span id ="lblProjectTotal"></span><b></label>
+                      <input type="number" min=1 id ="txtProjectTotal" class="form-control labeled" total = 0 percentage=0 required>
+                      <label id="computedProject"></label>
                     </div>    
+                    <hr>                    
                     <div class="form-group">
                       <h4><center>Exams</center></h4>
-                      <hr>
-                      <label for="txtExamsTotal">Total Points</label>
-                      <input type="number" min=1 id ="txtExamsTotal" class="form-control labeled">
+                      <input type="radio" id = "disableExam" name = "chkHasExam" value ="NFE"> NO FINAL EXAMINATION<br>
+                      <input type="radio" id = "enableExam" name = "chkHasExam" checked=true> WITH EXAM<br>
+                      <input type="radio" id = "isINC" name = "chkHasExam" > INC
+                      <br>
+                      <label for="txtExamsTotal"><b><span id ="lblExamsTotal"></span><b></label>
+                      <input type="number" min=1 id ="txtExamsTotal" class="form-control labeled" total = 0 percentage=0>
+                      <label id="computedExams"></label>
                     </div>
+                    <input type="hidden" id="txtComputedAtt">
+                    <input type="hidden" id="txtComputedQuiz">
+                    <input type="hidden" id="txtComputedProject">
+                    <input type="hidden" id="txtComputedExams">
+                    <p class="lead" id="computedTotal"></p>
                     <button type="submit" class="btn form-control btn-success">Save</button>
                 </div>
                 <!-- Your Page Content Here -->
@@ -310,11 +325,12 @@ desired effect
           </form>
         </div>
         <div class="modal-footer">
+ 
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
 
-      </div>
+      </div> 
     </div>
 </div>
 <!-- ./wrapper -->
@@ -331,9 +347,11 @@ desired effect
 <script src="../assets/js/app.min.js"></script>
 <script src="../assets/js/stacktable.js"></script>
 <script src="../assets/js/datatable.js"></script>
+<script src="../assets/js/jquery.validate.min.js"></script>
 <script src="../assets/js/myJs.js"></script>
 <script>
 var subject_code,subject_title,student_name,e_perc,e_total,q_perc,q_total,a_perc,a_total,p_perc,p_total
+var ts_att,ts_exam,ts_proj,ts_quiz,ts_total
 $(document).ready(function(){
       name =   JSON.parse(localStorage.getItem('information'))[0].firstname+' '+JSON.parse(localStorage.getItem('information'))[0].lastname
       role =JSON.parse(localStorage.getItem('information'))[0].role
@@ -386,11 +404,16 @@ $(document).ready(function(){
                   success:function(data){
                     $("#no-more-tables2").DataTable().destroy()
                     $('#tblStudentList').empty()
-                    var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
+                  
+                    $.each(data,function(k,v){
+                        var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
                     '<button class="btn btn-sm btn-refresh addGrade " room_id='+v.id+' term="midterm" name="'+v.fname+' '+v.lname+'">M</button> '+
                     '<button class="btn btn-sm btn-warning addGrade " room_id='+v.id+' term="prefinals" name="'+v.fname+' '+v.lname+'">PF</button> '+
-                    '<button class="btn btn-sm btn-danger addGrade " room_id='+v.id+' term="finals" name="'+v.fname+' '+v.lname+'">F</button> '
-                    $.each(data,function(k,v){
+                    '<button class="btn btn-sm btn-danger addGrade " room_id='+v.id+' term="finals" name="'+v.fname+' '+v.lname+'">F</button> '+
+                    '<button class="btn btn-sm btn-default  drop-student" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">DRP</button> '+
+                    '<button class="btn btn-sm btn-default  failed-due-to-absences" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">FA</button> '+
+                    '<button class="btn btn-sm btn-default withdrawn" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">W</button> '
+                    
                       $('#tblStudentList').append('<tr><td data-title="LASTNAME">'+v.lname+'</td><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="GRADING">'+s_buttons+'</td></tr>')
                     })
 
@@ -398,10 +421,57 @@ $(document).ready(function(){
 
                       term = $(this).attr('term')
                       name = $(this).attr('name')
+                      class_id = $(this).attr('room_id')
+                      var ex_grade,ex_quiz,ex_attendance,ex_project,ex_exam
+                     /* $.ajax({
+                        url:server+'grades.php',
+                        data:{request:'fetch_grade',class_id,class_id,term:term},
+                        dataType:'JSON',
+                        type:'POST',
+                        success:function(data){
+                          ex_grade = data[0].grade
+                          
+                          ex_quiz = (parseFloat(data[0].quiz) * parseFloat(q_perc)) * parseFloat((q_total)/100)
+                          console.log('quiz: '+data[0].quiz+ ' | perc: '+q_perc+' | '+' Total: '+q_total)
+                          ex_attendance = (parseFloat(data[0].attendance)* parseFloat(a_perc))* parseFloat((a_total/100))
+                          ex_project = (parseFloat(data[0].project) *parseFloat( p_perc))* parseFloat((p_total/100))
+                          ex_exam = (parseFloat(data[0].exam) * parseFloat(e_perc))* parseFloat((e_total/100 ))
+
+                          $('#txtAttendaceTotal').val(ex_attendance)
+                          $('#txtQuizTotal').val(ex_quiz)
+                          $('#txtProjectTotal').val(ex_project)
+                          $('#txtExamsTotal').val(ex_exam)
+
+                        }
+                      })
+*/
                       $('#lblTerm').html(term)
                       $('#lblStudentName').html(student_name)
                       $('#lblCode').html(subject_code)
                       $('#lblTitle').html(subject_title)
+
+                      $('#txtAttendaceTotal').attr('percentage',a_perc)
+                      $('#txtAttendaceTotal').attr('total',a_total)
+                      $('#txtAttendaceTotal').attr('max',a_total)
+                      $('#lblAttTotal').html('Total Points : ' +a_total + ' | Percentage: '+a_perc +'%')
+
+                      $('#txtQuizTotal').attr('percentage',q_perc)
+                      $('#txtQuizTotal').attr('total',q_total)
+                      $('#txtQuizTotal').attr('max',q_total)
+                      $('#lblQuizTotal').html('Total Points : ' +q_total + ' | Percentage: '+q_perc +'%')
+
+                      $('#txtProjectTotal').attr('percentage',p_perc)
+                      $('#txtProjectTotal').attr('total',p_total)
+                      $('#txtProjectTotal').attr('max',p_total)
+                      $('#lblProjectTotal').html('Total Points : ' +p_total + ' | Percentage: '+p_perc +'%')
+
+                      $('#txtExamsTotal').attr('percentage',e_perc)
+                      $('#txtExamsTotal').attr('total',e_total)
+                      $('#txtExamsTotal').attr('max',e_total)
+                      $('#lblExamsTotal').html('Total Points : ' +e_total + ' | Percentage: '+e_perc +'%')
+
+
+
                       $('#myModal').modal('show')
                     })
  
@@ -426,11 +496,131 @@ $(document).ready(function(){
       })
 });
 
-
+function computedTotalGrade(){
+ quiz = parseFloat($('#txtComputedQuiz').val())
+ att = parseFloat($('#txtComputedAtt').val())
+ proj = parseFloat($('#txtComputedProject').val())
+ exam = parseFloat($('#txtComputedExams').val())
+ var total = quiz + att + proj + exam
+ ts_total = total
+ $('#computedTotal').html('Total Grade: '+total)
+}
 $('#btnBack').click(function(){
   $('#divMyList').hide(500)
   $('#divMain').show(500)
 })
+
+$('#txtAttendaceTotal').on('input',function(){
+  var input = $(this).val()
+  var perc = $(this).attr('percentage')
+  var total = $(this).attr('total')
+  var computed = (parseInt(input) / parseInt(total)) * parseInt(perc)
+  var recomputed = Math.max( Math.round(computed * 10) / 10, 2.8 ).toFixed(1);
+  if(isNaN(recomputed)){
+    recomputed=0
+  }
+  $('#computedAtt').html('GRADE: '+recomputed)
+  att = $('#txtAttendaceTotal').val()
+  quiz = $('#txt')
+  ts_att = recomputed
+  console.log((recomputed))
+  $('#txtComputedAtt').val(recomputed)
+  computedTotalGrade()
+ // console.log(Math.round(computed/10)*10)
+})
+
+$('#txtExamsTotal').on('input',function(){
+  var input = $(this).val()
+  var perc = $(this).attr('percentage')
+  var total = $(this).attr('total')
+  var computed = (parseInt(input) / parseInt(total)) * parseInt(perc)
+  var recomputed = Math.max( Math.round(computed * 10) / 10, 2.8 ).toFixed(1);
+  if(isNaN(recomputed)){
+    recomputed=0
+  }
+  $('#computedExams').html('GRADE: '+recomputed)
+  ts_exam = recomputed
+  $('#txtComputedExams').val(recomputed)
+  console.log((recomputed))
+  computedTotalGrade()
+ // console.log(Math.round(computed/10)*10)
+})
+
+$('#txtProjectTotal').on('input',function(){
+  var input = $(this).val()
+  var perc = $(this).attr('percentage')
+  var total = $(this).attr('total')
+  var computed = (parseInt(input) / parseInt(total)) * parseInt(perc)
+  var recomputed = Math.max( Math.round(computed * 10) / 10, 2.8 ).toFixed(1);
+  if(isNaN(recomputed)){
+    recomputed=0
+  }
+  $('#computedProject').html('GRADE: '+recomputed)
+  $('#txtComputedProject').val(recomputed)
+  ts_proj = recomputed
+  console.log((recomputed))
+  computedTotalGrade()
+ // console.log(Math.round(computed/10)*10)
+})
+
+$('#txtQuizTotal').on('input',function(){
+  var input = $(this).val()
+  var perc = $(this).attr('percentage')
+  var total = $(this).attr('total')
+  var computed = (parseInt(input) / parseInt(total)) * parseInt(perc)
+  var recomputed = Math.max( Math.round(computed * 10) / 10, 2.8 ).toFixed(1);
+  if(isNaN(recomputed)){
+    recomputed=0
+  }
+  $('#computedQuiz').html('GRADE: '+recomputed)
+  ts_quiz = recomputed
+  $('#txtComputedQuiz').val(recomputed)
+  console.log((recomputed))
+  computedTotalGrade()
+ // console.log(Math.round(computed/10)*10)
+})
+$("#disableExam").click(function(){
+  $('#txtExamsTotal').attr('readonly',true)
+  $('#txtExamsTotal').val(0)
+  $('#computedExams').html('NO FINAL EXAM')
+  
+  ts_exam = 'NFE'
+
+})
+$("#isINC").click(function(){
+  $('#txtExamsTotal').attr('readonly',true)
+  $('#txtExamsTotal').val(0)
+  $('#computedExams').html('INCOMPLETE')
+  
+  ts_exam = 'INC'
+
+})
+$("#enableExam").click(function(){
+  $('#txtExamsTotal').attr('readonly',false)
+})
+
+$('#frmUpdateGrade').submit(function(e){
+ 
+  $.ajax({
+    url:server+'grades.php',
+    data:{request:'update_grade',term:term,class_id,class_id,term:term,exam:ts_exam,quiz:ts_quiz,project:ts_proj,attendance:ts_att,grade:ts_total},
+    dataType:'JSON',
+    type:'POST',
+    success:function(data){
+      if(data[0].MSG=="GRADE UPDATED!"){
+        alert(data[0].MSG)
+        location.reload()
+      }else{
+        alert(data[0].MSG)
+      }
+    }
+  })
+
+  e.preventDefault()
+
+})
+
+
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

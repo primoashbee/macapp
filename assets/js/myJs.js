@@ -1,4 +1,5 @@
-var server = "//localhost/macapp/php/"
+var server = "http:///gcccs.org/johndoe/php/"
+//var server = "//localhost/macapp/php/"
 function getAge(dateString) {
     var today = new Date();
     var birthDate = new Date(dateString);
@@ -106,8 +107,20 @@ function isLoggedIn(){
 	}
 }
 $(function(){
+	$.ajax({
+		url:server+'accounts.php',
+		dataType:'JSON',
+		data:{request:'validate'},
+		type:'POST',
+		success:function(data){
+			if(data==null){
+			}else if(data[0].MSG=="NOT AUTHORIZED"){
+				console.log(data[0].MSG)
+				clearLocalVariables()
+			}
+		}
+	})
 	isLoggedIn()
-	
     FastClick.attach(document.body);
 
 })

@@ -1,11 +1,8 @@
 <?php 
 require "config.php";
 session_start();
-header('Access-Control-Allow-Origin: *'); 
 $json=array();
-if(!isset($_SESSION['isLoggedIn'])){
-$json[0]=array('MSG'=>'NOT AUTHORIZED');
-}else{
+
 	$request  = $_POST['request'];
 	if($_POST['request']=="validate"){
 		$json[0]=array('MSG'=>'AUTHORIZED');
@@ -139,6 +136,6 @@ $json[0]=array('MSG'=>'NOT AUTHORIZED');
 				}
 			}
 	}
-}
+
 echo json_encode($json);
 ?>

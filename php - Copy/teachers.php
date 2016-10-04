@@ -1,7 +1,6 @@
 	<?php require "config.php";
 session_start();
 $json=array();
- header('Access-Control-Allow-Origin: *'); 
 function checkIfEmailIsSame($id,$email){
 	require "config.php";
 	$sql = "Select * from teacher_information where id ='$id'";
@@ -22,7 +21,7 @@ function checkIfEmailExists($id,$email){
 	}
 }
 
-if(!isset($_SESSION['isLoggedIn'])){
+if(!isset($global_user)){
 $json[0]=array('MSG'=>'NOT AUTHORIZED');
 }else{
 	if($_POST['request']=="teachers_accs"){
