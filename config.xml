@@ -1,7 +1,7 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="macapp" version="1.1.0" versionCode="1">
-	<script id="macapp"/>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="zambalesmacapp" version="1.0.1" versionCode="0">
+	<script id="zambalesmacapp"/>
 		<name>MACApp</name>
-		<description>Grading System for Students of CCS of MACSAT IBA ZAMBALES</description>
+		<description>APPLICATION FOR STUDENTS OF MACSAT IBA - COLLEGE OF COMPUTER STUDIES</description>
 		<author>Ashbee Morgado</author>
 		
 		<gap:platforms>
@@ -13,7 +13,12 @@
 		</gap:platforms>
 
 		<gap:plugin name="org.apache.cordova.media"/>
-		
+		<icon src="android/ldpi.png" platform="android" qualifier="ldpi" />
+		<icon src="android/mdpi.png" platform="android" qualifier="mdpi" />
+		<icon src="android/hdpi.png" platform="android" qualifier="hdpi" />
+		<icon src="android/xhdpi.png" platform="android" qualifier="xhdpi" />
+		<icon src="android/xxhdpi.png" platform="android" qualifier="xxhdpi" />
+		<icon src="android/fr-xxhdpi.png" platform="android" qualifier="fr-xxhdpi" />
 
 		<preference name="phonegap-version" value="3.6.3"/>
 		<feature name="http://api.phonegap.com/1.0/device"/>
