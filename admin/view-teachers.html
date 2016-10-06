@@ -60,6 +60,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -342,12 +345,15 @@ var teachers = []
     $(document).ready(function(){
   
       $.ajax({
+        beforeSend:function(){
+          $('#divLoading').addClass('show');
+        },
         url:server+'teachers.php',
         dataType:'JSON',
         data:{request:'fetch_all'},
         type:'POST',
         success:function(data){
-          
+          $('#divLoading').removeClass('show');
           $('#tblBodyMain').empty()
             $.each(data,function(k,v){
               var button1 = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' fname="'+v.fname+'" lname="'+v.lname+'" age="'+v.age+'" bday="'+v.bday+'" sex="'+v.sex+'" email= "'+v.email+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button>'
@@ -383,11 +389,15 @@ var teachers = []
 
               if(res == true){
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show');
+                  },
                   url:server+'subjects.php',
                   data:{id:id,request:'delete_subject'},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show');
                     if(data[0].MSG=="SUBJECT DELETED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -406,11 +416,15 @@ var teachers = []
 
               if(res == true){
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show');
+                  },
                   url:server+'subjects.php',
                   data:{id:id,request:'recover_subject'},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show');
                     if(data[0].MSG=="SUBJECT RECOVERED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -433,8 +447,7 @@ var teachers = []
 
   $("#frmUpdateTeacher").submit(function(e){
 
-      var total = $('.req').length
-      var id = $("#txtId").val()
+      var total = $('.req').length 
       var lname=$('#txtLname').val()
       var fname=$('#txtFname').val()
       var course=$('#txtCourse').val()
@@ -443,7 +456,7 @@ var teachers = []
       var gender=$('#txtGender').val()
       var email=$('#txtEmail').val() 
       var sex=$('#txtSex').val() 
-
+      var id = $('#txtId').val()
       x=0
         $.each($('.req'),function(k,v){
           if($(this).val()==""){
@@ -455,11 +468,15 @@ var teachers = []
           x=x+1}
         })
         $.ajax({
+          beforeSend:function(){
+            $('#divLoading').addClass('show');
+          },
           url:server+'teachers.php',
           data:{id:id,fname:fname,lname:lname,bday:bday,age:age,course:course,sex:sex,email:email,request:'update'},
           dataType:'JSON',
           type:'POST',
           success:function(data){
+            $('#divLoading').removeClass('show');
                   if(data[0].MSG=="INFORMATION UPDATED"){
                     alert(data[0].MSG)
                     location.reload()

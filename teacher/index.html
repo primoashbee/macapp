@@ -60,6 +60,8 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -318,11 +320,16 @@ $(document).ready(function(){
       $('#myStudentNumber').html(' '+role.toUpperCase())
     $('#myName').html(name)
       $.ajax({
+        beforeSend:function(){
+          $('#divLoading').addClass('show')
+        },
         url:server+'class.php',
         dataType:'JSON',
         data:{request:'myclass_summary',id:my_id},
         type:'POST',
         success:function(data){
+          
+          $('#divLoading').removeClass('show')
            $('#tblBodyMain').empty()
             $.each(data,function(k,v){
               var button1 = '<button class=\'btn btn-sm view-me btnv-default\' id='+v.id+'><span class=\'glyphicon glyphicon-eye-open\'></glyphicon></button>'
@@ -340,11 +347,15 @@ $(document).ready(function(){
                 class_id = $(this).attr('id')
 
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show')
+                  },
                   url:server+'class.php',
                   data:{request:'get_list_by_id',id:class_id},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show')
                     $('#tblStudentList').empty()
                     $.each(data,function(k,v){
                       $('#tblStudentList').append('<tr><td data-title="LASTNAME">'+v.lname+'</td><td data-title="FIRSTNAME">'+v.fname+'</td></tr>')

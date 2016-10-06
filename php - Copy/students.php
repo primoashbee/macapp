@@ -1,7 +1,8 @@
-<?php require "config.php";
+<?php 
+require "config.php";
 session_start();
 $json=array();
-
+header('Access-Control-Allow-Origin: *'); 
 	if($_POST['request']=="fetch_all"){
 		$sql = "Select * from qrystudentinformation";
 		$res = mysqli_query($conn,$sql);

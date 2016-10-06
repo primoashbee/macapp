@@ -60,6 +60,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -305,11 +308,15 @@ desired effect
 <script>
 $(function(){
    $.ajax({
+        beforeSend:function(){
+           $('#divLoading').addClass('show');
+        },
         url:server+'teachers.php',
         dataType:'JSON',
         data:{request:'teachers_accs'},
         type:'POST',
         success:function(data){
+           $('#divLoading').removeClass('show');
           $('#txtTeacher').empty();
           $('#txtTeacher').append('<option>---------</option>');
           $.each(data,function(k,v){
@@ -341,11 +348,15 @@ $(function(){
         })
         if(ctr==total){
           $.ajax({
+            beforeSend:function(){
+              $('#divLoading').addClass('show');
+            },
             url:server+'subjects.php',
             data:{teacher_id:teacher_id,code:code,title:title,units:units,year:year,sem:sem,request:'add_subject'},
             dataType:'JSON',
             type:'POST',
             success:function(data){
+              $('#divLoading').removeClass('show');
               if(data[0].MSG=="SUBJECT ADDED"){
                 alert(data[0].MSG)
                 location.reload()

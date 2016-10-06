@@ -2,7 +2,7 @@
 require "config.php";
 session_start();
 $json=array();
-
+header('Access-Control-Allow-Origin: *'); 
 function getStudentList($id){
 	require "config.php";
 	$sql = "Select * from class_list where id ='$id'";

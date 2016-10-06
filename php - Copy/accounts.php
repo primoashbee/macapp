@@ -2,7 +2,7 @@
 require "config.php";
 session_start();
 $json=array();
-
+header('Access-Control-Allow-Origin: *'); 
 	$request  = $_POST['request'];
 	if($_POST['request']=="validate"){
 		$json[0]=array('MSG'=>'AUTHORIZED');

@@ -60,6 +60,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -70,7 +73,8 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>MC</b>ST</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>MACSAT</b> IBA</span>
+      <p class="logo-lg" style="padding-bottom:20px"><b>Micro Asia College of Science</b></p>
+      <span>And Technology Inc</span>
     </a>
 
     <!-- Header Navbar -->
@@ -431,13 +435,14 @@ desired effect
 <script>
 var age_validator,t_age_validator;
     $(document).ready(function(){
-      
+       $('#divLoading').addClass('show')
         $.ajax({
           url:server+'courses.php',
           data:{request:'fetch_all'},
           dataType:'JSON',
           type:'POST',
           success:function(data){
+             $('#divLoading').removeClass('show')
             $('#txtCourse').empty()
             $.each(data,function(k,v){
               $('#txtCourse').append('<option value='+v.id+'>'+v.course+'</option>')
@@ -506,11 +511,15 @@ var age_validator,t_age_validator;
           return false
         }
         $.ajax({
+          beforeSend:function(){
+             $('#divLoading').addClass('show')
+          },
           url:server+'accounts.php',
           data:{user:user,pass:pass,fname:fname,lname:lname,birthday:birthday,age:age,course:course,sex:sex,email:email,request:'create'},
           dataType:'JSON',
           type:'POST',
           success:function(data){
+             $('#divLoading').removeClass('show')
                   if(data[0].MSG=="ACCOUNT CREATED"){
                     alert(data[0].MSG)
                     location.reload()
@@ -570,12 +579,15 @@ var age_validator,t_age_validator;
         }
      
         $.ajax({
+          beforeSend:function(){
+             $('#divLoading').addClass('show')
+          },
           url:server+'accounts.php',
           data:{user:user,pass:pass,fname:fname,lname:lname,birthday:birthday,age:age,sex:sex,email:email,request:'create_teacher'},
           dataType:'JSON',
           type:'POST',
           success:function(data){
-            
+             $('#divLoading').removeClass('show')
                   if(data[0].MSG=="ACCOUNT CREATED"){
                     alert(data[0].MSG)
                     location.reload()

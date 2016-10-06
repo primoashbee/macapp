@@ -1,6 +1,7 @@
 <?php 
 require "config.php";
 session_start();
+header('Access-Control-Allow-Origin: *'); 
 $user = mysqli_real_escape_string($conn,$_POST['user']);
 $pass = mysqli_real_escape_string($conn,$_POST['pass']);
 $sql="Select * from users where username='".$user."' and passkey='".$pass."' and isDeleted=false";

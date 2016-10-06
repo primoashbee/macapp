@@ -1,4 +1,5 @@
 	<?php require "config.php";
+	header('Access-Control-Allow-Origin: *'); 
 session_start();
 $json=array();
 function checkIfEmailIsSame($id,$email){

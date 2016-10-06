@@ -1,7 +1,7 @@
 <?php 
 require "config.php";
 session_start();
-
+header('Access-Control-Allow-Origin: *'); 
 function checkSubjectIfExist($code){
 	require "config.php";
 	$sql = "Select * from subjects where code ='$code'";

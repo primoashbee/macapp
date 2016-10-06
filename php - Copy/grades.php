@@ -2,7 +2,7 @@
 require "config.php";
 session_start();
 $json=array();
-
+header('Access-Control-Allow-Origin: *'); 
 
 	if($_POST['request']=="update_grade"){
 		$term = $_POST['term'];

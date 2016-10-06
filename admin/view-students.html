@@ -60,6 +60,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -347,12 +350,15 @@ desired effect
     $(document).ready(function(){
   
       $.ajax({
+        beforeSend:function(){
+          $('#divLoading').addClass('show');
+        },
         url:server+'students.php',
         dataType:'JSON',
         data:{request:'fetch_all'},
         type:'POST',
         success:function(data){
-          
+          $('#divLoading').removeClass('show');
           $('#tblBodyMain').empty()
             $.each(data,function(k,v){
               var button1 = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' age="'+v.age+'" bday="'+v.bday+'" course="'+v.course+'" email="'+v.email+'" fname="'+v.fname+'" lname = "'+v.lname+'" sex="'+v.sex+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button>'
@@ -393,11 +399,15 @@ desired effect
 
               if(res == true){
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show');
+                  },
                   url:server+'subjects.php',
                   data:{id:id,request:'delete_subject'},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show');
                     if(data[0].MSG=="SUBJECT DELETED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -416,11 +426,15 @@ desired effect
 
               if(res == true){
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show');
+                  },
                   url:server+'subjects.php',
                   data:{id:id,request:'recover_subject'},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show');
                     if(data[0].MSG=="SUBJECT RECOVERED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -465,11 +479,15 @@ desired effect
           x=x+1}
         })
         $.ajax({
+          beforeSend:function(){
+            $('#divLoading').addClass('show');
+          },
           url:server+'students.php',
           data:{id:id,fname:fname,lname:lname,bday:bday,age:age,course:course,sex:sex,email:email,request:'update'},
           dataType:'JSON',
           type:'POST',
           success:function(data){
+            $('#divLoading').removeClass('show');
                   if(data[0].MSG=="INFORMATION UPDATED"){
                     alert(data[0].MSG)
                     location.reload()

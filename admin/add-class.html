@@ -62,6 +62,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -351,6 +354,7 @@ var class_id_to_add
     $('#divMyList').hide()
     $('#divToAdd').hide()
     $.ajax({
+
         url:server+'teachers.php',
         dataType:'JSON',
         data:{request:'teachers_accs'},
@@ -362,11 +366,13 @@ var class_id_to_add
     })
 
     $.ajax({
+      beforeSend:function(){ $('#divLoading').addClass('show')},
       url:server+'students.php',
       dataType:'JSON',
       data:{request:'fetch_all'},
       type:'POST',
       success:function(data){
+          $('#divLoading').removeClass('show');
           students=data
           $('#tblAddStudentBody').empty()
               
@@ -393,11 +399,15 @@ var class_id_to_add
         } 
     })
     $.ajax({
+      beforeSend:function(){ 
+        $('#divLoading').addClass('show')
+      },
       url:server+'class.php',
       dataType:'JSON',
       data:{request:'fetch_all'},
       type:'POST',
       success:function(data){
+         $('#divLoading').removeClass('show');
         lists = data
         $('#tblBodyMain').empty()
           $.each(data,function(k,v){
@@ -415,12 +425,15 @@ var class_id_to_add
             var id = $(this).attr('id')
             var link = $(this).parent().attr('href')
               $.ajax({
+                beforeSend:function(){
+                   $('#divLoading').addClass('show');
+                },
                 url:server+'class.php',
                 data:{id:id,request:'get_list_by_id'},
                 dataType:'JSON',
                 type:'POST',
                 success:function(data){
-                 
+                  $('#divLoading').removeClass('show');
                 x= data
                  $('#tblStudentBody').empty()
                  $.each(data,function(k,v){
@@ -460,11 +473,15 @@ var class_id_to_add
 
             if(res == true){
               $.ajax({
+                beforeSend:function(){
+                $('#divLoading').addClass('show');
+                },
                 url:server+'subjects.php',
                 data:{id:id,request:'recover_subject'},
                 dataType:'JSON',
                 type:'POST',
                 success:function(data){
+                   $('#divLoading').removeClass('show');
                   alert(data.MSG)
                  
 
@@ -494,11 +511,15 @@ var class_id_to_add
         var res = confirm('Delete students is permanent. Are you sure?')
         if(res==true){
           $.ajax({
+            beforeSend:function(){
+               $('#divLoading').addClass('show');
+            },
             url:server+'class.php',
             data:{list:toRemove,request:'remove_from_class'},
             dataType:'JSON',
             type:'POST',
             success:function(data){
+               $('#divLoading').removeClass('show');
                if(data[0].MSG=="STUDENT REMOVED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -520,11 +541,15 @@ var class_id_to_add
         alert('Select from the list first')
       }else{
           $.ajax({
+            beforeSend:function(){
+               $('#divLoading').addClass('show');
+            },
             url:server+'class.php',
             data:{list:toAdd,subject_id:class_id,request:'add_to_class'},
             dataType:'JSON',
             type:'POST',
             success:function(data){
+               $('#divLoading').removeClass('show');
                if(data[0].MSG=="STUDENT ADDED TO CLASS"){
                       alert(data[0].MSG)
                       location.reload()

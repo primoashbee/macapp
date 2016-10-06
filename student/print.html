@@ -61,6 +61,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -303,12 +306,15 @@ var teachers = []
       $('#myStudentNumber').html(' '+role.toUpperCase())
     $('#myName').html(name)
       $.ajax({
+        beforeSend:function(){
+          $('#divLoading').addClass('show')
+        }, 
         url:server+'grades.php',
         dataType:'JSON',
         data:{request:'summary_grade',id:my_id},
         type:'POST',
         success:function(data){
-          
+          $('#divLoading').removeClass('show')
           $('#tblBodyMain').empty()
             $.each(data,function(k,v){
              var s_buttons = ''

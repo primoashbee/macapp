@@ -60,6 +60,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -352,12 +355,15 @@ var teachers = []
           } 
         })
       $.ajax({
+        beforeSend:function(){
+          $('#divLoading').addClass('show');
+        },
         url:server+'subjects.php',
         dataType:'JSON',
         data:{request:'fetch_all'},
         type:'POST',
         success:function(data){
-          
+          $('#divLoading').removeClass('show');
           $('#tblBodyMain').empty()
             $.each(data,function(k,v){
               var button1 = '<button class=\'btn btn-sm edit-me btn-warning\' id='+v.id+' code="'+v.code+'" title="'+v.title+'" units="'+v.units+'" year="'+v.year+'" sem="'+v.sem+'" teacher = "'+v.teacher+'" t_id="'+v.t_id+'"><span class=\'glyphicon glyphicon-pencil\'></glyphicon></button>'
@@ -400,11 +406,15 @@ var teachers = []
 
               if(res == true){
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show');
+                  },
                   url:server+'subjects.php',
                   data:{id:id,request:'delete_subject'},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show');
                     if(data[0].MSG=="SUBJECT DELETED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -423,11 +433,15 @@ var teachers = []
 
               if(res == true){
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show');
+                  },
                   url:server+'subjects.php',
                   data:{id:id,request:'recover_subject'},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show');
                     if(data[0].MSG=="SUBJECT RECOVERED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -468,11 +482,15 @@ var teachers = []
         })
         if(ctr==total){
           $.ajax({
+            beforeSend:function(){
+              $('#divLoading').addClass('show');
+            },
             url:server+'subjects.php',
             data:{teacher_id:teacher_id,code:code,title:title,units:units,year:year,sem:sem,request:'update_subject'},
             dataType:'JSON',
             type:'POST',
             success:function(data){
+              $('#divLoading').removeClass('show');
               if(data[0].MSG=="SUBJECT UPDATED"){
                 alert(data[0].MSG)
                 location.reload()

@@ -60,6 +60,8 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -360,11 +362,15 @@ $(document).ready(function(){
       $('#myStudentNumber').html(' '+role.toUpperCase())
     $('#myName').html(name)
       $.ajax({
+        beforeSend:function(){
+          $('#divLoading').addClass('show')
+        },
         url:server+'class.php',
         dataType:'JSON',
         data:{request:'myclass_summary',id:my_id},
         type:'POST',
         success:function(data){
+          $('#divLoading').removeClass('show')
            $('#tblBodyMain').empty()
             $.each(data,function(k,v){
               var button1 = '<button class=\'btn btn-sm view-me btnv-default\' id='+v.id+' code="'+v.code+'" title ="'+v.title+'" e_perc='+v.criteria.e_percentage+' e_total='+v.criteria.e_total+' q_perc='+v.criteria.q_percentage+' q_total='+v.criteria.q_total+' a_perc='+v.criteria.a_percentage+' a_total='+v.criteria.a_total+' p_perc='+v.criteria.p_percentage+' p_total='+v.criteria.p_total+'><span class=\'glyphicon glyphicon-eye-open\'></glyphicon></button>'
@@ -397,25 +403,29 @@ $(document).ready(function(){
                 q_total = $(this).attr('q_total')
          
                 $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show')
+                  },
                   url:server+'class.php',
                   data:{request:'get_list_by_id',id:class_id},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                    $('#divLoading').removeClass('show')
                     $("#no-more-tables2").DataTable().destroy()
                     $('#tblStudentList').empty()
                   
-                    $.each(data,function(k,v){
-                        var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
-                    '<button class="btn btn-sm btn-refresh addGrade " room_id='+v.id+' term="midterm" name="'+v.fname+' '+v.lname+'">M</button> '+
-                    '<button class="btn btn-sm btn-warning addGrade " room_id='+v.id+' term="prefinals" name="'+v.fname+' '+v.lname+'">PF</button> '+
-                    '<button class="btn btn-sm btn-danger addGrade " room_id='+v.id+' term="finals" name="'+v.fname+' '+v.lname+'">F</button> '+
-                    '<button class="btn btn-sm btn-default  drop-student" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">DRP</button> '+
-                    '<button class="btn btn-sm btn-default  failed-due-to-absences" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">FA</button> '+
-                    '<button class="btn btn-sm btn-default withdrawn" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">W</button> '
-                    
-                      $('#tblStudentList').append('<tr><td data-title="LASTNAME">'+v.lname+'</td><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="GRADING">'+s_buttons+'</td></tr>')
-                    })
+                      $.each(data,function(k,v){
+                          var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
+                      '<button class="btn btn-sm btn-refresh addGrade " room_id='+v.id+' term="midterm" name="'+v.fname+' '+v.lname+'">M</button> '+
+                      '<button class="btn btn-sm btn-warning addGrade " room_id='+v.id+' term="prefinals" name="'+v.fname+' '+v.lname+'">PF</button> '+
+                      '<button class="btn btn-sm btn-danger addGrade " room_id='+v.id+' term="finals" name="'+v.fname+' '+v.lname+'">F</button> '+
+                      '<button class="btn btn-sm btn-default drop-student" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">DRP</button> '+
+                      '<button class="btn btn-sm btn-default  failed-due-to-absences" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">FA</button> '+
+                      '<button class="btn btn-sm btn-default withdrawn" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">W</button> '
+                      
+                        $('#tblStudentList').append('<tr><td data-title="LASTNAME">'+v.lname+'</td><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="GRADING">'+s_buttons+'</td></tr>')
+                      })
 
                     $(".addGrade").click(function(){
 
@@ -423,28 +433,9 @@ $(document).ready(function(){
                       name = $(this).attr('name')
                       class_id = $(this).attr('room_id')
                       var ex_grade,ex_quiz,ex_attendance,ex_project,ex_exam
-                     /* $.ajax({
-                        url:server+'grades.php',
-                        data:{request:'fetch_grade',class_id,class_id,term:term},
-                        dataType:'JSON',
-                        type:'POST',
-                        success:function(data){
-                          ex_grade = data[0].grade
-                          
-                          ex_quiz = (parseFloat(data[0].quiz) * parseFloat(q_perc)) * parseFloat((q_total)/100)
-                          console.log('quiz: '+data[0].quiz+ ' | perc: '+q_perc+' | '+' Total: '+q_total)
-                          ex_attendance = (parseFloat(data[0].attendance)* parseFloat(a_perc))* parseFloat((a_total/100))
-                          ex_project = (parseFloat(data[0].project) *parseFloat( p_perc))* parseFloat((p_total/100))
-                          ex_exam = (parseFloat(data[0].exam) * parseFloat(e_perc))* parseFloat((e_total/100 ))
+                    
 
-                          $('#txtAttendaceTotal').val(ex_attendance)
-                          $('#txtQuizTotal').val(ex_quiz)
-                          $('#txtProjectTotal').val(ex_project)
-                          $('#txtExamsTotal').val(ex_exam)
-
-                        }
-                      })
-*/
+                  
                       $('#lblTerm').html(term)
                       $('#lblStudentName').html(student_name)
                       $('#lblCode').html(subject_code)
@@ -474,7 +465,30 @@ $(document).ready(function(){
 
                       $('#myModal').modal('show')
                     })
- 
+                    $('.drop-student').click(function(){
+                      my_id = $(this).attr('room_id');
+                      var res = confirm('Drop this student?')
+                      if(res){
+                        $.ajax({
+                         beforeSend:function(){
+                            $('#divLoading').addClass('show')
+                          }, 
+                          url:server+'grades.php',
+                          dataType:'JSON',
+                          data:{request:'drop',id:my_id},
+                          type:'POST',
+                          success:function(data){
+                            $('#divLoading').removeClass('show')
+                            if(data[0].MSG=="STUDENT DROPPED"){
+                              alert(data[0].MSG)
+                              location.reload()
+                            }else{
+                              alert(data[0].MSG)
+                            }
+                          }
+                        })
+                      }
+                    })
                     $("#no-more-tables2").DataTable()
                   }
                 })
@@ -600,13 +614,17 @@ $("#enableExam").click(function(){
 })
 
 $('#frmUpdateGrade').submit(function(e){
- 
+ alert(ts_total)
   $.ajax({
+    beforeSend:function(){
+      $('#divLoading').addClass('show')
+    },
     url:server+'grades.php',
     data:{request:'update_grade',term:term,class_id,class_id,term:term,exam:ts_exam,quiz:ts_quiz,project:ts_proj,attendance:ts_att,grade:ts_total},
     dataType:'JSON',
     type:'POST',
     success:function(data){
+      $('#divLoading').removeClass('show')
       if(data[0].MSG=="GRADE UPDATED!"){
         alert(data[0].MSG)
         location.reload()

@@ -60,6 +60,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="divLoading"> 
+</div>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -337,12 +340,15 @@ desired effect
     $(document).ready(function(){
    
       $.ajax({
+        beforeSend:function(){
+           $('#divLoading').addClass('show');
+        },
         url:server+'courses.php',
         dataType:'JSON',
         data:{request:'fetch_with_archive'},
         type:'POST',
         success:function(data){
-          
+           $('#divLoading').removeClass('show');
           $('#tblBodyMain').empty()
            
             $.each(data,function(k,v){
@@ -373,6 +379,9 @@ desired effect
               if(res){
                 //softdelete
                 $.ajax({
+                  beforeSend:function(){
+                     $('#divLoading').addClass('show');
+                  },
                   url:server+'courses.php',
                   data:{request:'delete',id:id},
                   dataType:'JSON',
@@ -394,11 +403,15 @@ desired effect
               if(res){
                 //softdelete
                 $.ajax({
+                  beforeSend:function(){
+                     $('#divLoading').addClass('show');
+                  },
                   url:server+'courses.php',
                   data:{request:'recover',id:id},
                   dataType:'JSON',
                   type:'POST',
                   success:function(data){
+                     $('#divLoading').removeClass('show');
                     if(data[0].MSG=="COURSE RECOVERED"){
                       alert(data[0].MSG)
                       location.reload()
@@ -437,6 +450,9 @@ desired effect
               }
               if(ctr==max){
                   $.ajax({
+                    beforeSend:function(){
+                       $('#divLoading').addClass('show');
+                    },
                     url:server+'courses.php',
                     data:{request:'create',course:course,desc:desc},
                     dataType:'JSON',
@@ -472,11 +488,15 @@ desired effect
           course =  $('#txtUpdateCourse').val()
           desc =  $('#txtUpdateDescription').val()
           $.ajax({
+            beforeSend:function(){
+               $('#divLoading').addClass('show');
+            },
             url:server+'courses.php',
             data:{id:id,course:course,desc:desc,request:'update'},
             dataType:'JSON',
             type:'POST',
             success:function(data){
+              $('#divLoading').removeClass('show');
               if(data[0].MSG="COURSE UPDATED!"){
                 alert(data[0].MSG)
                 location.reload()
