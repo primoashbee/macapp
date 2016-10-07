@@ -1,8 +1,9 @@
 <?php 
+header('Access-Control-Allow-Origin: *');
 require "config.php";
 session_start();
- header('Access-Control-Allow-Origin: *'); 
 $json=array();
+
 
 function getStudentList($id){
 	require "config.php";
@@ -70,9 +71,7 @@ function getCriteriaById($id){
 	}
 	return $crits[0];
 }
-if(!isset($_SESSION['isLoggedIn'])){
-$json[0]=array('MSG'=>'NOT AUTHORIZED');
-}else{
+
 $req = $_POST['request'];
 	if($req == "fetch_all"){
 		$sql = "Select * from class_summary";
@@ -118,32 +117,31 @@ $req = $_POST['request'];
 			$conn_trans->rollback();
 		}
 	}else if($req=="add_to_class"){
-		try{
-			$conn_trans->begin_transaction();
 			$subject_id=$_POST['subject_id'];
+			$ctr=0;
+			$inc=0;
 			foreach($_POST['list'] as $x){
-
 				if(!StudentIsInClass($x,$subject_id)){
 							if(mysqli_query($conn,"Insert into class(subject_id,student_id)values('$subject_id','$x')")){
 								$class_id = getClassIdAfterInsert($x);
 								$sql = "Insert into grades(class_id)values('$class_id')";
 									if(mysqli_query($conn,$sql)){
-										
 										$json[0]=array('MSG'=>'ADDED TO CLASS');
+										$ctr++;
 									}
 						}
 		
 				}
-
+				$inc++;
 			}
-			$conn_trans->commit();
-			$json[0]=array('MSG'=>'STUDENT ADDED TO CLASS');
-		} catch (Exception $e ){
-
+			if($ctr==$inc){
+				$json[0]=array('MSG'=>'STUDENT ADDED TO CLASS');
+			}else{
 			$json[0]=array('MSG'=>'ERROR');
-			$conn_trans->rollback();
-		}
+			}
+			
+		
 	}
-}
+
 echo json_encode($json);
 ?>

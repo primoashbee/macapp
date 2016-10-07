@@ -239,37 +239,23 @@ desired effect
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update Subject</h4>   
+          <h4 class="modal-title"><span id="lblSubjectInfo"></span></h4>   
         </div>
         <div class="modal-body">
-          
-            <div class="form-group">
-              <label for="txtCode">CODE</label>
-              <input type="text" id="txtCode" class="form-control req" readonly="">
+        <div class="panel panel-primary" style="border-color:#00a65a !important"> 
+          <div class="panel-heading" style="background-color: #00a65a !important;border-color:#00a65a !important"> 
+            <h3 class="panel-title" >Grades</h3> 
+          </div> 
+            <div class="panel-body"> 
+              <center><h4>QUIZ: <span id="lblQuiz"></span></h4></center>
+              <center><h4>EXAM: <span id="lblExam"></span></h4></center>
+              <center><h4>ATTENDANCE: <span id="lblAttendance"></span></h4></center>
+              <center><h4>PROJECT: <span id="lblProject"></span></h4></center>
+              <hr>
+              <center><h2>ATTENDANCE: <span id="lblAttendance"></span></h2></center>
+              
             </div>
-            <div class="form-group">
-              <label for="txtTitle">TITLE</label>
-              <input type="text" id="txtTitle" class="form-control req" placeholder="Title">
-            </div>
-            <div class="form-group">
-              <label for="txtUnits">UNITS</label>
-              <input type="number" id="txtUnits" class="form-control req" placeholder="Units" min="0">
-            </div>
-            <div class="form-group">
-              <label for="txtYear">YEAR</label>
-              <input type="text" id="txtYear" class="form-control req" placeholder="Year">
-            </div>
-            <div class="form-group">
-              <label for="txtSemester">SEMESTER</label>
-              <input type="text" id="txtSemester" class="form-control req" placeholder="Semester">
-            </div>
-            <div class="form-group">
-              <label for="txtTeacher">TEACHER</label>
-              <select class="form-control req" id="txtTeacher">
-                <option>HAHA</option>
-              </select>
-            </div>
-      
+        </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Save</button>
@@ -312,7 +298,7 @@ var teachers = []
         },
         url:server+'subjects.php',
         dataType:'JSON',
-        data:{request:'my_subjects',id:my_id},
+        data:{request:'my_subjects',id:my_id,term:'prelim'},
         type:'POST',
         success:function(data){
           
@@ -346,10 +332,46 @@ var teachers = []
             })
             $('.addGrade').click(function(){
               var class_id = $(this).attr('room_id')
+             var term  = $(this).attr('term')
+              /*
+             $.ajax({
+                  beforeSend:function(){
+                    $('#divLoading').addClass('show')
+                  }, 
+                  url:server+'grades.php',
+                  dataType:'JSON',
+                  data:{request:'get_grade_by_term',id:my_id},
+                  type:'POST',
+                  success:function(data){
+                  $('#divLoading').removeClass('show')
+                }
+              })
+*/
 
+              $.ajax({
+               beforeSend:function(){
+                  $('#divLoading').addClass('show')
+                }, 
+                url:server+'grades.php',
+                dataType:'JSON',
+                data:{request:'get_grade_by_term',id:class_id,term:term},
+                type:'POST',
+                success:function(data){
+                  console.log(data);
+                  $('#divLoading').removeClass('show')
+                  $('#lblAttendance').html(data[0].attendance)
+                  $('#lblExam').html(data[0].exam)
+                  $('#lblQuiz').html(data[0].quiz)
+                  $('#lblProject').html(data[0].project)
+                  $('#lblTotal').html(data[0].total_grade)
+                  
+                  $('#myModal').modal('show');
+                 
+                }
+              })  
             })
 
-            $('#no-more-tables').DataTable( {
+        /*    $('#no-more-tables').DataTable( {
                   dom: 'Bfrtip',
                   buttons: [
                       {
@@ -367,7 +389,14 @@ var teachers = []
                           }
                       }
                   ]
-              } );          
+              } );
+          */     
+          $('#no-more-tables').DataTable();     
+        },
+        error:function(xhr,textStatus,thrownError){
+          alert(xhr.status)
+          alert(thrownError)
+          alert(textStatus)
         }
       })
    

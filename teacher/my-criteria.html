@@ -158,6 +158,8 @@ desired effect
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  <div id="divLoading"> 
+</div>
     <!-- Content Header (Page header) -->
     <section class="content-header" id="divMain">
       <h1>
@@ -343,11 +345,16 @@ $(document).ready(function(){
       $('#myStudentNumber').html(' '+role.toUpperCase())
     $('#myName').html(name)
       $.ajax({
+        beforeSend:function(){
+          $('#divLoading').addClass('show')
+        },
         url:server+'class.php',
         dataType:'JSON',
         data:{request:'myclass_summary',id:my_id},
         type:'POST',
         success:function(data){
+
+          $('#divLoading').removeClass('show')
            $('#tblBodyMain').empty()
             $.each(data,function(k,v){
               var button1 = '<button class=\'btn btn-sm view-me btn-danger\' id='+v.id+'><i class=\'glyphicon glyphicon-tasks\'></i></button>'

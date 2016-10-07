@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Log in</title>
+  <title>MACApp</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -19,7 +19,6 @@
         apply the skin class to the body tag so the changes take effect.
   -->
   <link rel="stylesheet" href="assets/css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="assets/css/main.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,62 +27,122 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <style>
-    .body {
-    background: url('assets/img/logo.png') ;
-    background-size: 100% 100%;
     
+    .body {
     
     }
-    div.transbox {
-     
-      margin-top:15%;
-      background-color: #ffffff;
+    .form-control:focus{
+      transition: ease-in 0.2s;
+      border:1px solid #00a951;
+      box-shadow: none;
+    }
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+    }
+    .login-box-body{
+      padding-top: 15px;
+    }
+    .login-logo h1{
+      font-weight: 400;
+      letter-spacing: .05px;
+      color: #008740;
+      margin-left: 10px;
+    }
+    .login-logo h2{
+      margin: 0;
+      color: black;
+      font-size: 24px;
+      font-family: 'PT Sans Narrow', sans-serif;
+      font-weight: 400;
+    }
+    .login-box-msg, .register-box-msg{
+       font-family: 'PT Sans Narrow', sans-serif;
+       color: #008740;
+       font-weight: 200;
+       text-align: left;
+       padding: 0;
+    }
+    .form-container{
+      background-color: #eff7f3;
       border: 2px solid green;
+      /*filter: alpha(opacity=100);*/
+      /* margin: auto; */
       opacity: .9;
-      filter: alpha(opacity=60); /* For IE8 and earlier */
+      position: absolute;
+      /* margin: auto; */
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      height: 710px;
+      max-width: 370px;
+      width: 100%;
+      padding-bottom: 20px;
+    }
+    .login-box-body{
+      background-color: #eff7f3;
+      -moz-opacity: 1;  
+      filter:alpha(opacity=100);  
     }
     p{
       font-weight: bold;
       font-size:2em;
       opacity: 10;
     }
+    .btn-primary{
+      color: #fff;
+      background: #008740;
+      border:1px solid #ddd;
+    }
+    .btn-primary:hover,.btn-primary:focus{
+      background: #eff7f3;
+      color: #008740;
+      border:1px solid #008740;
+      transition: all ease-in 0.3s;
+    }
   </style>
 </head>
 <body class="hold-transition login-page body">
-<div id="divLoading"> 
-</div>
 <div class="login-box transbox">
-  <div class="login-logo">
-   <h1><b>MACSAT | </b>  MOBILE APP</h1>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body ">
-    <p class="login-box-msg">Enter your Credentials</p>
+  <div class="form-container">
 
-    <form action="#" method="post" id="target">
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Username" id="txtUsername" required="">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" id="txtPassword" required="">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
+    <div style="padding: 20px;">
+      <img src="assets/img/logo.png" style="width: 100%;padding-top:50px">
+    </div>
 
+    <!-- /.login-logo -->
+    <div class="login-box-body ">
+        <div class="login-logo">
+         <h1>Android -  Based Grading System</h1>
         </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" id="btnSubmit">Sign In</button>
-        </div>
-        <!-- /.col -->
-      </div>
-    </form>
 
-   
+      <p class="login-box-msg">Enter your Credentials</p>
 
+        <form action="#" method="post" id="target">
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="Username" id="txtUsername" required="">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" placeholder="Password" id="txtPassword" required="">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-8 col-md-offset-2">
+              <button type="submit" class="btn btn-primary btn-block btn-flat" id="btnSubmit">Sign In</button>
+            </div>
+            <!-- /.col -->
+          </div>
+      </form>
+    </div>
   </div>
+
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
@@ -99,7 +158,6 @@
 
 <script>
  $( "#target" ).submit(function( event ) {
-  $('#divLoading').addClass('show')
   var user= $('#txtUsername').val()
   var pass = $('#txtPassword').val()
     if(!(user=="" || pass=="")){
@@ -110,7 +168,6 @@
         dataType:'JSON',
         type:'POST',
         success:function(data){
-          $('#divLoading').removeClass('show')
           if(data[0].MSG==0){
               alert('Username/Password Incorrect')
 

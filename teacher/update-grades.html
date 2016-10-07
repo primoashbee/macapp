@@ -354,12 +354,14 @@ desired effect
 <script>
 var subject_code,subject_title,student_name,e_perc,e_total,q_perc,q_total,a_perc,a_total,p_perc,p_total
 var ts_att,ts_exam,ts_proj,ts_quiz,ts_total
+    var submit_validator;
 $(document).ready(function(){
       name =   JSON.parse(localStorage.getItem('information'))[0].firstname+' '+JSON.parse(localStorage.getItem('information'))[0].lastname
       role =JSON.parse(localStorage.getItem('information'))[0].role
       my_id =JSON.parse(localStorage.getItem('information'))[0].ID
       $('#divMyList').hide()
       $('#myStudentNumber').html(' '+role.toUpperCase())
+  
     $('#myName').html(name)
       $.ajax({
         beforeSend:function(){
@@ -370,9 +372,11 @@ $(document).ready(function(){
         data:{request:'myclass_summary',id:my_id},
         type:'POST',
         success:function(data){
+
           $('#divLoading').removeClass('show')
            $('#tblBodyMain').empty()
             $.each(data,function(k,v){
+
               var button1 = '<button class=\'btn btn-sm view-me btnv-default\' id='+v.id+' code="'+v.code+'" title ="'+v.title+'" e_perc='+v.criteria.e_percentage+' e_total='+v.criteria.e_total+' q_perc='+v.criteria.q_percentage+' q_total='+v.criteria.q_total+' a_perc='+v.criteria.a_percentage+' a_total='+v.criteria.a_total+' p_perc='+v.criteria.p_percentage+' p_total='+v.criteria.p_total+'><span class=\'glyphicon glyphicon-eye-open\'></glyphicon></button>'
           
            /* if(v.isDeleted==0){
@@ -401,7 +405,12 @@ $(document).ready(function(){
 
                 q_perc = $(this).attr('q_perc')
                 q_total = $(this).attr('q_total')
-         
+                  if(a_perc==null || a_total==null || p_total==null||p_perc==null||e_perc==null||e_total==null||q_perc==null||q_total==null){
+                    submit_validator = true
+                  }else{
+                    submit_validator=false
+                  }
+
                 $.ajax({
                   beforeSend:function(){
                     $('#divLoading').addClass('show')
@@ -416,7 +425,7 @@ $(document).ready(function(){
                     $('#tblStudentList').empty()
                   
                       $.each(data,function(k,v){
-                          var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
+                        var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
                       '<button class="btn btn-sm btn-refresh addGrade " room_id='+v.id+' term="midterm" name="'+v.fname+' '+v.lname+'">M</button> '+
                       '<button class="btn btn-sm btn-warning addGrade " room_id='+v.id+' term="prefinals" name="'+v.fname+' '+v.lname+'">PF</button> '+
                       '<button class="btn btn-sm btn-danger addGrade " room_id='+v.id+' term="finals" name="'+v.fname+' '+v.lname+'">F</button> '+
@@ -466,6 +475,10 @@ $(document).ready(function(){
                       $('#myModal').modal('show')
                     })
                     $('.drop-student').click(function(){
+                      if(submit_validator==true){
+                        alert('Ooops. This has no grading criteria yet. Please update grading criteria')
+                        return false
+                      }
                       my_id = $(this).attr('room_id');
                       var res = confirm('Drop this student?')
                       if(res){
@@ -480,6 +493,62 @@ $(document).ready(function(){
                           success:function(data){
                             $('#divLoading').removeClass('show')
                             if(data[0].MSG=="STUDENT DROPPED"){
+                              alert(data[0].MSG)
+                              location.reload()
+                            }else{
+                              alert(data[0].MSG)
+                            }
+                          }
+                        })
+                      }
+                    })
+                    $('.failed-due-to-absences').click(function(){
+                      if(submit_validator==true){
+                        alert('Ooops. This has no grading criteria yet. Please update grading criteria')
+                        return false
+                      }
+                      my_id = $(this).attr('room_id');
+                      var res = confirm('Mark this student as FA?')
+                      if(res){
+                        $.ajax({
+                         beforeSend:function(){
+                            $('#divLoading').addClass('show')
+                          }, 
+                          url:server+'grades.php',
+                          dataType:'JSON',
+                          data:{request:'fda',id:my_id},
+                          type:'POST',
+                          success:function(data){
+                            $('#divLoading').removeClass('show')
+                            if(data[0].MSG=="STUDENT FAILED"){
+                              alert(data[0].MSG)
+                              location.reload()
+                            }else{
+                              alert(data[0].MSG)
+                            }
+                          }
+                        })
+                      }
+                    })
+                    $('.withdrawn').click(function(){
+                      if(submit_validator==true){
+                        alert('Ooops. This has no grading criteria yet. Please update grading criteria')
+                        return false
+                      }
+                      my_id = $(this).attr('room_id');
+                      var res = confirm('Withdraw this student?')
+                      if(res){
+                        $.ajax({
+                         beforeSend:function(){
+                            $('#divLoading').addClass('show')
+                          }, 
+                          url:server+'grades.php',
+                          dataType:'JSON',
+                          data:{request:'w',id:my_id},
+                          type:'POST',
+                          success:function(data){
+                            $('#divLoading').removeClass('show')
+                            if(data[0].MSG=="STUDENT WITHDRAWN"){
                               alert(data[0].MSG)
                               location.reload()
                             }else{
@@ -614,7 +683,7 @@ $("#enableExam").click(function(){
 })
 
 $('#frmUpdateGrade').submit(function(e){
- alert(ts_total)
+ if(submit_validator==true){
   $.ajax({
     beforeSend:function(){
       $('#divLoading').addClass('show')
@@ -633,8 +702,11 @@ $('#frmUpdateGrade').submit(function(e){
       }
     }
   })
-
+}else{
+alert('Ooops. This has no grading criteria yet. Please update grading criteria')
+}  
   e.preventDefault()
+
 
 })
 
