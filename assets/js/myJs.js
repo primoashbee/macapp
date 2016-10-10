@@ -107,7 +107,7 @@ function isLoggedIn(){
 	url = window.location.pathname
 	username = localStorage.getItem('information')
 	//if url has admin,teacher,student and no username
-	if(url.includes('admin') || url.includes('teacher') ||url.includes('student')){
+	if(url.indexOf('admin') ==-1 || url.indexOf('teacher') ==-1 || url.indexOf('student')==-1) {
 		if( username ==null){
 			location.href='../index.html'
 			return false
