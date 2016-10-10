@@ -1,4 +1,4 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="macsatgrading" version="1.0.0" versionCode="1">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="macsatgrading"  xmlns:android="http://schemas.android.com/apk/res/android" version="1.0.0" versionCode="1">
   <script id="macsatgrading"/>
     <name>MacApp</name>
     <description>
@@ -15,7 +15,13 @@
       <gap:platform name="symbian.wrt"/>
       <gap:platform name="blackberry" project="widgets"/>
     </gap:platforms>
-
+    <gap:config-file platform="android" parent="/manifest">
+         <application android:debuggable="true" />
+    </gap:config-file>
+    <manifest>
+     <application android:debuggable="true" />
+     
+    </manifest>
     <gap:plugin name="org.apache.cordova.media"/>
     <icon src="android/ldpi.png" platform="android" qualifier="ldpi" />
     <icon src="android/mdpi.png" platform="android" qualifier="mdpi" />
