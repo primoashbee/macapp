@@ -8,11 +8,17 @@ header('Access-Control-Allow-Origin: *');
 		$json[0]=array('MSG'=>'AUTHORIZED');
 	}
 	if($request=="fetch_all"){
-		$sql ="Select * from users where role !='admin'";
+		$sql ="SELECT u.*,CONCAT(si.`firstname`,' ',si.`lastname`) AS name  FROM users u INNER JOIN students_information si ON u.`username`=si.username WHERE u.role !='admin'";
 		$res = mysqli_query($conn,$sql);
 			while($data=mysqli_fetch_array($res)){
-				$json[]=array('MSG'=>1,'id'=>$data['id'],'username'=>$data['username'],'password'=>$data['passkey'],'role'=>$data['role'],'isDeleted'=>$data['isDeleted']);	
+				$json[]=array('MSG'=>1,'id'=>$data['id'],'username'=>$data['username'],'password'=>$data['passkey'],'name'=>$data['name'],'role'=>$data['role'],'isDeleted'=>$data['isDeleted']);	
 			}
+		$sql ="SELECT u.*,CONCAT(ti.`firstname`,' ',ti.`lastname`) AS name  FROM users u 	INNER JOIN teacher_information ti ON u.`username`=ti.username WHERE u.role !='admin'";
+		$res = mysqli_query($conn,$sql);
+			while($data=mysqli_fetch_array($res)){
+				$json[]=array('MSG'=>1,'id'=>$data['id'],'username'=>$data['username'],'password'=>$data['passkey'],'role'=>$data['role'],'name'=>$data['name'],'isDeleted'=>$data['isDeleted']);	
+			}
+			
 	}else if($request=="create"){
 		$user=mysqli_real_escape_string($conn,$_POST['user']);
 		$pass=mysqli_real_escape_string($conn,$_POST['pass']);

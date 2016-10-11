@@ -306,10 +306,12 @@ desired effect
                     <hr>                    
                     <div class="form-group">
                       <h4><center>Exams</center></h4>
+                      <div id="forFinals">
                       <input type="radio" id = "disableExam" name = "chkHasExam" value ="NFE"> NO FINAL EXAMINATION<br>
                       <input type="radio" id = "enableExam" name = "chkHasExam" checked=true> WITH EXAM<br>
                       <input type="radio" id = "isINC" name = "chkHasExam" > INC
                       <br>
+                      </div>
                       <label for="txtExamsTotal"><b><span id ="lblExamsTotal"></span><b></label>
                       <input type="number" min=1 id ="txtExamsTotal" class="form-control labeled" total = 0 percentage=0>
                       <label id="computedExams"></label>
@@ -362,6 +364,7 @@ $(document).ready(function(){
       $('#divMyList').hide()
       $('#myStudentNumber').html(' '+role.toUpperCase())
   
+    $('#forFinals').hide()
     $('#myName').html(name)
       $.ajax({
         beforeSend:function(){
@@ -442,7 +445,13 @@ $(document).ready(function(){
                       name = $(this).attr('name')
                       class_id = $(this).attr('room_id')
                       var ex_grade,ex_quiz,ex_attendance,ex_project,ex_exam
-                    
+                      if(term == "finals"){
+                        $("#forFinals").show()
+                      }else{
+
+                        $("#forFinals").hide()
+                        $('#enableExam').click()
+                      }
 
                   
                       $('#lblTerm').html(term)
