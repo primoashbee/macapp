@@ -21,6 +21,18 @@ function getAge(dateString) {
 
     return age;
 }
+function isNull(data,total_grade){
+	var x = data
+	if((!($.isNumeric(total_grade)))){
+		return 'N/A';
+	}
+	if(x=="null" || x==null ) {
+		return 'N/A'
+	}else{
+		return x
+	}
+
+}
 function adminValidate(callback){
 	var res;
 	$.ajax({

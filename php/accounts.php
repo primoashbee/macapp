@@ -141,6 +141,16 @@ header('Access-Control-Allow-Origin: *');
 					$json[0]=array('MSG'=>'OLD PASSWORD DID NOT MATCH');
 				}
 			}
+	}else if($request=="change_pass_by_admin"){
+		$password = mysqli_real_escape_string($conn,$_POST('password'));
+		$username = mysqli_real_escape_string($conn,$_POST('username'));
+				$sql="Update users set passkey='$password' where username ='$username'";
+					if(mysqli_query($conn,$sql)){
+						$json[0]=array('MSG'=>'PASSWORD CHANGE SUCCESSFUL');
+					}else{
+						$json[0]=array('MSG'=>'ERROR');
+					}
+			
 	}
 
 echo json_encode($json);

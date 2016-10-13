@@ -276,6 +276,7 @@ desired effect
   <div class="control-sidebar-bg"></div>
 
   <!-- Modal -->
+  <form id="frmUpdateAccount">
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
@@ -286,32 +287,30 @@ desired effect
           <h4 class="modal-title">Update Account</h4>   
         </div>
         <div class="modal-body">
-          <form id="frmUpdateAccount">
+          
             <div class="form-group">
               <label for="txtUsername">Username</label>
               <input type="text" id="txtUsername" class="form-control" readonly="">
             </div>
             <div class="form-group">
-              <label for="txtOldPass">Password</label>
-              <input type="text" id="txtOldPass" class="form-control" placeholder="Old Password">
-            </div>
-            <div class="form-group">
               <label for="txtNewPassword">New Password</label>
-              <input type="text" id="txtNewPassword" class="form-control" placeholder="New Password">
+              <input type="text" id="txtNewPassword" class="form-control" placeholder="New Password" required="">
             </div>
             <div class="form-group">
               <label for="txtNewPasswordConfirm">New Password</label>
-              <input type="text" id="txtNewPasswordConfirm" class="form-control" placeholder="Confirm Password">
+              <input type="text" id="txtNewPasswordConfirm" class="form-control" placeholder="Confirm Password" required="">
             </div>
-          </form>
+         
         </div>
         <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Change Password</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
 
       </div>
     </div>
+  </form>
 </div>
 <!-- ./wrapper -->
 
@@ -423,6 +422,36 @@ desired effect
       
    
 });
+$("#frmUpdateAccount").submit(function(e){
+  var p1 =  $('#txtNewPassword').val()
+  var p2 =  $('#txtNewPasswordConfirm').val()
+  var to_change = $("#txtUsername").val();
+  if(p1!=p2){
+    alert('Passwords Must Match')
+  }else if(p1=="" || p2==""){
+    alert('Fill Passwords')
+  }else{
+      $.ajax({
+        beforeSend:function(){
+        $('#divLoading').addClass('show');
+        },
+        url:server+'accounts.php',
+        dataType:'JSON',
+        data:{request:'change_pass_by_admin',username:to_change,password:p1},
+        type:'POST',
+        success:function(data){
+           $('#divLoading').removeClass('show');
+          if(data[0].MSG=="PASSWORD CHANGE SUCCESSFUL"){
+            alert(data[0].MSG)
+            location.reload()
+          }else{
+            alert(data[0].MSG)
+          }
+        }
+      })
+  }
+  e.preventDefault()
+})
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

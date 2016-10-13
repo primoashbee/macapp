@@ -408,10 +408,10 @@ $(document).ready(function(){
 
                 q_perc = $(this).attr('q_perc')
                 q_total = $(this).attr('q_total')
-                  if(a_perc==null || a_total==null || p_total==null||p_perc==null||e_perc==null||e_total==null||q_perc==null||q_total==null){
-                    submit_validator = true
+                  if(a_perc=="null" || a_total=="null" || p_total=="null"||p_perc=="null"||e_perc=="null"||e_total=="null"||q_perc=="null"||q_total=="null"){
+                    submit_validator = false
                   }else{
-                    submit_validator=false
+                    submit_validator=true
                   }
 
                 $.ajax({
@@ -484,7 +484,7 @@ $(document).ready(function(){
                       $('#myModal').modal('show')
                     })
                     $('.drop-student').click(function(){
-                      if(submit_validator==true){
+                      if(submit_validator==false){
                         alert('Ooops. This has no grading criteria yet. Please update grading criteria')
                         return false
                       }
@@ -512,7 +512,7 @@ $(document).ready(function(){
                       }
                     })
                     $('.failed-due-to-absences').click(function(){
-                      if(submit_validator==true){
+                      if(submit_validator==false){
                         alert('Ooops. This has no grading criteria yet. Please update grading criteria')
                         return false
                       }
@@ -540,7 +540,7 @@ $(document).ready(function(){
                       }
                     })
                     $('.withdrawn').click(function(){
-                      if(submit_validator==true){
+                      if(submit_validator==false){
                         alert('Ooops. This has no grading criteria yet. Please update grading criteria')
                         return false
                       }

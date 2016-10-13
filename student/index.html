@@ -252,13 +252,13 @@ desired effect
               <center><h4>ATTENDANCE: <span id="lblAttendance"></span></h4></center>
               <center><h4>PROJECT: <span id="lblProject"></span></h4></center>
               <hr>
-              <center><h2>ATTENDANCE: <span id="lblAttendance"></span></h2></center>
+              <center><h2>Total Grade: <span id="lblTotal"></span></h2></center>
               
             </div>
         </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Save</button>
+
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -358,11 +358,11 @@ var teachers = []
                 type:'POST',
                 success:function(data){
                   console.log(data);
-                  $('#divLoading').removeClass('show')
-                  $('#lblAttendance').html(data[0].attendance)
-                  $('#lblExam').html(data[0].exam)
-                  $('#lblQuiz').html(data[0].quiz)
-                  $('#lblProject').html(data[0].project)
+                  
+                  $('#lblAttendance').html(isNull(data[0].attendance,data[0].total_grade))
+                  $('#lblExam').html(isNull(data[0].exam,data[0].total_grade))
+                  $('#lblQuiz').html(isNull(data[0].quiz,data[0].total_grade))
+                  $('#lblProject').html(isNull(data[0].project,data[0].total_grade))
                   $('#lblTotal').html(data[0].total_grade)
                   
                   $('#myModal').modal('show');
@@ -401,6 +401,10 @@ var teachers = []
       })
    
 });
+
+$('#myModal').on('hidden.bs.modal', function () {
+    $('#divLoading').removeClass('show')
+})
 
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
