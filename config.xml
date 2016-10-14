@@ -47,6 +47,7 @@
     </feature>
 
     <preference name="orientation" value="auto"/>
-    <preference name="fullscreen" value="true"/>
+    <preference name="fullscreen" value="false"/>
     <preference name="target-device" value="universal"/>
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
 </widget>
