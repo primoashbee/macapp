@@ -72,7 +72,7 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>MC</b>ST</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>MACSAT</b> IBA</span>
+      <span class="logo-lg"><b>MACSAT</b></span>
     </a>
 
     <!-- Header Navbar -->
@@ -219,7 +219,7 @@ desired effect
       Mobile App
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">MACSAT, IBA ZAMBALES</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2016 <a href="#">MACSAT</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -444,6 +444,7 @@ $(document).ready(function(){
                       term = $(this).attr('term')
                       name = $(this).attr('name')
                       class_id = $(this).attr('room_id')
+                      student_name =$(this).attr('name')
                       var ex_grade,ex_quiz,ex_attendance,ex_project,ex_exam
                       if(term == "finals"){
                         $("#forFinals").show()

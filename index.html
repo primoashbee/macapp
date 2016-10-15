@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>MACApp</title>
@@ -29,17 +27,17 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <style>
-    
     .body {
     
     }
+    
     .form-control:focus{
       transition: ease-in 0.2s;
       border:1px solid #00a951;
       box-shadow: none;
     }
     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins';
       font-weight: 700;
     }
     .login-box-body{
@@ -71,14 +69,15 @@
       /*filter: alpha(opacity=100);*/
       /* margin: auto; */
       opacity: .9;
-      position: absolute;
+      position: fixed;
       /* margin: auto; */
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       margin: auto;
-      height: 710px;
+      height: 540px;
+      /*margin-top: 5px;*/
       max-width: 370px;
       width: 100%;
       padding-bottom: 20px;
@@ -104,20 +103,42 @@
       border:1px solid #008740;
       transition: all ease-in 0.3s;
     }
-  </style>
+    @media screen and (max-width: 480px) {
+    .form-container{
+      background-color: #eff7f3;
+      border: 2px solid green;
+      /*filter: alpha(opacity=100);*/
+      /* margin: auto; */
+      opacity: .9;
+      position: absolute;
+      /* margin: auto; */
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      /*margin: auto;*/
+      height: 540px;
+      margin-top: 5px;
+      max-width: 370px;
+      width: 100%;
+      padding-bottom: 20px;
+      }
+    }
+    </style>
 </head>
 <body class="hold-transition login-page body">
 <div class="login-box transbox">
   <div class="form-container">
 
-    <div style="padding: 20px;">
-      <img src="assets/img/logo.png" style="width: 100%;padding-top:50px">
-    </div>
+    
 
     <!-- /.login-logo -->
     <div class="login-box-body ">
+        <div style="padding: 20px;" class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-xs-offset-2 col-sm-offset-2">
+          <img src="assets/img/logo.png" style="width: 100%;">
+        </div>
         <div class="login-logo">
-         <h1>Android -  Based Grading System</h1>
+          <h1>Android -  Based Grading System</h1>
         </div>
 
       <p class="login-box-msg">Enter your Credentials</p>
@@ -172,7 +193,6 @@
         success:function(data){
           if(data[0].MSG==0){
               alert('Username/Password Incorrect')
-
           }else{
             var role = data[0].role
             localStorage.setItem('information',JSON.stringify(data))
@@ -191,7 +211,6 @@
  
   event.preventDefault();
 });
-
 </script>
 </body>
 </html>

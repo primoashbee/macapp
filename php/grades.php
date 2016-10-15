@@ -198,6 +198,8 @@ header('Access-Control-Allow-Origin: *');
 					'total_grade'=>$data[4]
 					);
 			}
+	}else if($_POST['send_grade']){
+		
 	}
 
 echo json_encode($json);

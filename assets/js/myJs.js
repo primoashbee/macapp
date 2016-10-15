@@ -7,13 +7,7 @@ settings.success = function(obj) {
 }
  $.ajax(settings)
 }
-$("input").focus(function(){
-    $('footer').hide();
-});
 
-$("input").blur(function(){
-    $('footer').show();
-});
 var server = "http://rojan.robreyes.xyz/php/"
 //var server = "//localhost/macapp/php/"
 function getAge(dateString) {
@@ -152,4 +146,14 @@ $(function(){
     FastClick.attach(document.body);
 
 })
+var field = document.createElement('input');
+field.setAttribute('type', 'text');
+document.body.appendChild(field);
+
+setTimeout(function() {
+    field.focus();
+    setTimeout(function() {
+        field.setAttribute('style', 'display:none;');
+    }, 50);
+}, 50);
 
