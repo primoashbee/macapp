@@ -1,42 +1,49 @@
-<?php 
-require "PHPMailer-master/PHPMailerAutoload.php";
-require 'PhpExcel.php';
-$mail = new PHPMailer;
+<?php
+// the message
+//$student_id=$_POST['id'];
+require "config.php";
+require "PHPExcel.php";
+$student_id=1;
+$sql ="Select * from grade_summary where student_id='$student_id'";
+$res = mysqli_query($conn,$sql);
+$table='<b>Hi Ashbee Morgado</b>';
 
-//$mail->SMTPDebug = 3;                               // Enable verbose debug //zoutput
+if(mysqli_num_rows($res)>0){
+	$table .='
+	<table class="table table-striped" bordered="1">
+		<tr>
+			<td>Code</td>
+			<td>Title</td>
+			<td>Prelims</td>
+			<td>Midterms</td>
+			<td>Pre Finals</td>
+			<td>Finals</td>
+		</tr>';
 
-$mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = '138.68.76.171';  // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-//$mail->Username = 'macsatapp2016@gmail.com';                 // SMTP username
-$mail->Username = 'rojan@robreyes.xyz';                 // SMTP username
-$mail->Password = 'macsat2016';                           // SMTP password
+	while ($data=mysqli_fetch_array($res)) {
+		$table .='
+		<tr>
+			<td>'.$data['code'].'</td>
+			<td>'.$data['title'].'</td>
+			<td>'.$data['p_total_grade'].'</td>
+			<td>'.$data['m_total_grade'].'</td>
+			<td>'.$data['pf_total_grade'].'</td>
+			<td>'.$data['f_total_grade'].'</td>
+		</tr>';
+	}
+	$table.='</table>';
+	header("Content-Type: application/xls");
+	$x = header("Content-Disposition:attachment;filename=download.xls");
+	echo $table;
+	
+	fwrite($x,'validation');
 
-$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-$mail->Port = 465;                                    // TCP port to connect to
+}
+//$msg = 'Download grade <a href="http://rojan.robreyes.xyz/php/validate.zip">Here</a>';
 
-$mail->setFrom('macatadmin@macsat.com', 'ADMIN');
-$mail->addAddress('ashbee.morgado@icloud.com', 'Ashbee Morgado');     // Add a recipient
-//$mail->addAddress('ellen@example.com');               // Name is optional
-//$mail->addReplyTo('info@example.com', 'Information');
-//$mail->addCC('cc@example.com');
-//$mail->addBCC('bcc@example.com');
+// use wordwrap() if lines are longer than 70 characters
+//$msg = wordwrap($msg,70);
 
-//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-$mail->isHTML(true);                                  // Set email format to HTML
-
-$mail->Subject = 'Here is the subject';
-$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message has been sent';
-};
-
-$file = "DownloadReport";
-$table
+// send email
+//mail("ashbee.morgado@icloud.com","My subject",$msg);
 ?>
