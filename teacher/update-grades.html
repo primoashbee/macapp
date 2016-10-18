@@ -699,7 +699,7 @@ $('#frmUpdateGrade').submit(function(e){
       $('#divLoading').addClass('show')
     },
     url:server+'grades.php',
-    data:{request:'update_grade',term:term,class_id,class_id,term:term,exam:ts_exam,quiz:ts_quiz,project:ts_proj,attendance:ts_att,grade:ts_total},
+    data:{request:'update_grade',term:term,class_id:class_id,term:term,exam:ts_exam,quiz:ts_quiz,project:ts_proj,attendance:ts_att,grade:ts_total},
     dataType:'JSON',
     type:'POST',
     success:function(data){
