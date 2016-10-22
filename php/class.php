@@ -93,13 +93,23 @@ $req = $_POST['request'];
 	}else if($req=="get_list_by_id"){
 		//$json[]=getStudentList($_POST['id']);
 		$id = $_POST['id'];
-		$sql = "Select * from class_list where subject_id ='$id'";
+		$sql = "SELECT cl.*, g.`f_total_grade`  as remarks   FROM class_list cl INNER JOIN  grades g  ON g.`class_id` = cl.`class_id` WHERE subject_id ='$id'";
 		
 		$res = mysqli_query($conn,$sql);
 		$json=array();
 		
 			while($data=mysqli_fetch_array($res)){
-				$json[]=array('id'=>$data['class_id'],'student_id'=>$data['student_id'],'fname'=>$data['firstname'],'lname'=>$data['lastname']);
+				$class_row='';
+				if($data['remarks']=='W'){
+					$class_row = 'withdrawn';
+				}elseif($data['remarks']=='FA'){
+					$class_row = 'fda';
+				}elseif($data['remarks']=='DROPPED'){
+					$class_row = 'dropped';
+				}elseif(intval($data['remarks'])>85){
+					$class_row = 'pasado';
+				}
+				$json[]=array('id'=>$data['class_id'],'student_id'=>$data['student_id'],'fname'=>$data['firstname'],'lname'=>$data['lastname'],'remarks'=>$data['remarks'],'class'=>$class_row);
 			
 		}
 	}else if($req=="remove_from_class"){

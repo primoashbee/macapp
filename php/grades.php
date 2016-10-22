@@ -165,7 +165,7 @@ header('Access-Control-Allow-Origin: *');
 			}
 	}else if($_POST['request']=="w"){
 		$class_id = $_POST['id'];
-		$sql = "Update grades set p_total_grade='W',m_total_grade='W',pf_total_grade='W',f_total_grade='W' where class_id='$class_id'";
+		$sql = "Update grades set p_total_grade='WITHDRAWN',m_total_grade='W',pf_total_grade='W',f_total_grade='W' where class_id='$class_id'";
 			$json[0]=array('MSG'=>'ERROR');	
 			if(mysqli_query($conn,$sql)){
 

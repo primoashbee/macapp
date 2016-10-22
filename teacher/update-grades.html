@@ -28,6 +28,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <style>
 
+  .foo {
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  }
+
+  .pasado {
+    background: #008d4c !important;
+    background-color: #008d4c !important;
+  }
+  .failed {
+    background: #13b4ff !important;
+    background-color: #13b4ff !important;
+  }
+
+  .fda {
+    background: #ab3fdd !important;
+    background-color: #ab3fdd !important;
+  }
+
+  .withdrawnn {
+    background: #ab6d8f !important;
+    background-color: #ab6d8f !important;
+  }
+  .dropped {
+    background: #ae163e !important;
+    background-color: #ae163e !important;
+  }
+
 
   </style>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -189,7 +220,14 @@ desired effect
         <h1>
       <span id="lblSubjectInfo"></span>
         <small> &raquo; List of Students</small>
-
+        <pre>
+        <b>Legend</b>
+        <div class="foo pasado"> <span style="padding-left:20px">PASSED </span></div><br>
+        <div class="foo failed"> <span style="padding-left:20px">FAILED </span></div><br>
+        <div class="foo fda"> <span style="padding-left:20px">FAILED DUE TO ABSENCES</span></div><br>
+        <div class="foo withdrawnn"><span style="padding-left:20px"> WITHDRAWN </span></div><br>
+        <div class="foo dropped"><span style="padding-left:20px"> DROPPED </span></div>
+        </pre>
       </h1>
       <button class="btn btn-default" id="btnBack"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
               <table class="table table-bordered table-striped table-condensed cf" id="no-more-tables2">
@@ -436,7 +474,7 @@ $(document).ready(function(){
                       '<button class="btn btn-sm btn-default  failed-due-to-absences" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">FA</button> '+
                       '<button class="btn btn-sm btn-default withdrawn" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">W</button> '
                       
-                        $('#tblStudentList').append('<tr><td data-title="LASTNAME">'+v.lname+'</td><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="GRADING">'+s_buttons+'</td></tr>')
+                        $('#tblStudentList').append('<tr class='+v.class+'><td data-title="LASTNAME">'+v.lname+'</td><td data-title="FIRSTNAME">'+v.fname+'</td><td data-title="GRADING">'+s_buttons+'</td></tr>')
                       })
 
                     $(".addGrade").click(function(){
