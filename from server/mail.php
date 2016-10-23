@@ -12,7 +12,7 @@ if(($req=="send_link")){
 	$to = "macsatapp2016@gmail.com";
 	$subject = "HTML email";
 
-	$message = 'Download Grade from <a href="http://rojan.robreyes.xyz/php/mail.php?id='.$_GET['id'].'&request=get">Here</a>';
+	$message = 'Download Grade from <a href="http://rojan.robreyes.xyz/php/printmail.php?id='.$_GET['id'].'&request=get">Here</a>';
 
 	// Always set content-type when sending HTML email
 	$headers = "MIME-Version: 1.0" . "\r\n";

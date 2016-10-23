@@ -1,3 +1,5 @@
+var server = "http://rojan.robreyes.xyz/php/"
+//var server = "//localhost/macapp/php/"
 $.aboyAJAX = function(settings){
 settings.beforeSend = function(){
 	alert("before send");
@@ -8,8 +10,7 @@ settings.success = function(obj) {
  $.ajax(settings)
 }
 
-//var server = "http://rojan.robreyes.xyz/php/"
-var server = "//localhost/macapp/php/"
+
 function getAge(dateString) {
     var today = new Date();
     var birthDate = new Date(dateString);
