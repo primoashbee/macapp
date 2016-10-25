@@ -53,7 +53,7 @@ header('Access-Control-Allow-Origin: *');
 
 			}
 
-		}else if($term=="prefinals"){
+		}else if($term=="semifinals"){
 
 			$sql = "Update grades set pf_quiz='$quiz',pf_exam='$exam',pf_attendance='$attendance',pf_project='$project',pf_total_grade='$grade' where class_id='$class_id'";
 

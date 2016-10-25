@@ -61,7 +61,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
   </style>
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- HTML5 Shim a2nd Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -468,7 +468,7 @@ $(document).ready(function(){
                       $.each(data,function(k,v){
                         var s_buttons = '<button class="btn btn-sm btn-success addGrade" room_id='+v.id+' term="prelim" name="'+v.fname+' '+v.lname+'">P</button> '+
                       '<button class="btn btn-sm btn-refresh addGrade " room_id='+v.id+' term="midterm" name="'+v.fname+' '+v.lname+'">M</button> '+
-                      '<button class="btn btn-sm btn-warning addGrade " room_id='+v.id+' term="prefinals" name="'+v.fname+' '+v.lname+'">PF</button> '+
+                      '<button class="btn btn-sm btn-warning addGrade " room_id='+v.id+' term="semifinals" name="'+v.fname+' '+v.lname+'">SF</button> '+
                       '<button class="btn btn-sm btn-danger addGrade " room_id='+v.id+' term="finals" name="'+v.fname+' '+v.lname+'">F</button> '+
                       '<button class="btn btn-sm btn-default drop-student" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">DRP</button> '+
                       '<button class="btn btn-sm btn-default  failed-due-to-absences" room_id='+v.id+'  name="'+v.fname+' '+v.lname+'">FA</button> '+
@@ -732,6 +732,7 @@ $("#enableExam").click(function(){
 
 $('#frmUpdateGrade').submit(function(e){
  if(submit_validator==true){
+
   $.ajax({
     beforeSend:function(){
       $('#divLoading').addClass('show')

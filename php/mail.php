@@ -87,6 +87,7 @@ function ConvertToGradePoint($grade){
 	}
 	//return $x;
 }
+
 if(isset($_GET['request'])){
 	$req = $_GET['request'];
 }else{
@@ -143,13 +144,15 @@ if(($req=="send_link")){
 			$objTpl->getActiveSheet()->setCellValue('L6', $course);
 			//ROW 9 starts 
 			$x=9;
+			$gwa=0;
 			while($data = mysqli_fetch_array($res)){
 			$total_subjects+=1;
 			$total_units += intval($data['units']);
 			$equivalent = ConvertToGradePoint($data['f_total_grade']);
 
 			$total_gwa += $equivalent;
-
+			$gwa += $data['f_total_grade'];
+		
 			$objTpl->getActiveSheet()->setCellValue('A'.$x,$data['code']);
 			$objTpl->getActiveSheet()->setCellValue('B'.$x,$data['title']);
 			$objTpl->getActiveSheet()->setCellValue('D'.$x,$data['p_total_grade']);
@@ -161,11 +164,13 @@ if(($req=="send_link")){
 			$objTpl->getActiveSheet()->setCellValue('J'.$x,$data['tname']);
 			$x++;
 			}
-
+			$gwa = $gwa/$total_subjects;
 			$objTpl->getActiveSheet()->setCellValue('H21',$total_units);
 			$objTpl->getActiveSheet()->setCellValue('C21',$total_subjects);
 			$objTpl->getActiveSheet()->setCellValue('J21',$total_gwa/$total_subjects);
-
+			$objTpl->getActiveSheet()->setCellValue('L21',$gwa);
+			
+		
 			header('Content-Type: application/vnd.ms-excel');
 			header('Content-Disposition: attachment;filename="Grades of '.$username.'".xls');
 			//header('Cache-Control: max-age=0');
@@ -177,7 +182,7 @@ if(($req=="send_link")){
 		}
 		
 			
-	}
+	
 
 
 }
