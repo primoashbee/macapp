@@ -53,7 +53,7 @@ header('Access-Control-Allow-Origin: *');
 
 			}
 
-		}else if($term=="prefinals"){
+		}else if($term=="semifinals"){
 
 			$sql = "Update grades set pf_quiz='$quiz',pf_exam='$exam',pf_attendance='$attendance',pf_project='$project',pf_total_grade='$grade' where class_id='$class_id'";
 
@@ -165,7 +165,7 @@ header('Access-Control-Allow-Origin: *');
 			}
 	}else if($_POST['request']=="w"){
 		$class_id = $_POST['id'];
-		$sql = "Update grades set p_total_grade='W',m_total_grade='W',pf_total_grade='W',f_total_grade='W' where class_id='$class_id'";
+		$sql = "Update grades set p_total_grade='WITHDRAWN',m_total_grade='W',pf_total_grade='W',f_total_grade='W' where class_id='$class_id'";
 			$json[0]=array('MSG'=>'ERROR');	
 			if(mysqli_query($conn,$sql)){
 
@@ -198,6 +198,8 @@ header('Access-Control-Allow-Origin: *');
 					'total_grade'=>$data[4]
 					);
 			}
+	}else if($_POST['send_grade']){
+		
 	}
 
 echo json_encode($json);

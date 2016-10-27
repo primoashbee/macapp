@@ -7,7 +7,7 @@ session_start();
 $json=array();
 
 header('Access-Control-Allow-Origin: *'); 
-
+header('Content-type: application/json');
 	$request  = $_POST['request'];
 
 	if($_POST['request']=="validate"){
@@ -233,7 +233,7 @@ header('Access-Control-Allow-Origin: *');
 		$newpass1 = mysql_escape_string($_POST['newpass']);
 
 		$newpass2 = mysql_escape_string($_POST['newpass2']);
-
+		
 			if($newpass1!=$newpass2){
 
 				$json[0]=array('MSG'=>'PASSWORD MUST MATCH');
