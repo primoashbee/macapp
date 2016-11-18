@@ -345,7 +345,7 @@ desired effect
 <script>
 var teachers = []
     $(document).ready(function(){
-    $.ajax({
+  /*  $.ajax({
         url:server+'teachers_accs.php',
         dataType:'JSON',
         data:{request:'fetch_all'},
@@ -354,6 +354,7 @@ var teachers = []
           teachers=data
           } 
         })
+    */
       $.ajax({
         beforeSend:function(){
           $('#divLoading').addClass('show');
