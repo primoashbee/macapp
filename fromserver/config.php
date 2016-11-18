@@ -1,7 +1,7 @@
 <?php 
 date_default_timezone_set('Asia/Manila');
-$conn = mysqli_connect('localhost','id106944_rob_macsat','isLocked1234','id106944_rob_macsat');
-//$conn = mysqli_connect('localhost','root','','macsat');
+//$conn = mysqli_connect('localhost','id106944_rob_macsat','isLocked1234','id106944_rob_macsat');
+$conn = mysqli_connect('localhost','root','','macsat');
 
 
 
@@ -11,7 +11,7 @@ $masterPassword = '9876543210';
 
 $masterRole ='admin';
 
-$conn_trans = new mysqli('localhost','id106944_rob_macsat','isLocked1234','id106944_rob_macsat');
+//$conn_trans = new mysqli('localhost','id106944_rob_macsat','isLocked1234','id106944_rob_macsat');
 //$conn_trans = new mysqli('localhost','root','','macsat');
 
 $global_user;

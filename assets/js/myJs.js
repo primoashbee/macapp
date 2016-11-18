@@ -1,4 +1,4 @@
-var server = "http://macapp.000webhostapp.com/php/"
+var server = "http://macsatpro.com/php/"
 //var server = "//localhost/macapp/php/"
 $.aboyAJAX = function(settings){
 settings.beforeSend = function(){
