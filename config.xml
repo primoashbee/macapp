@@ -22,7 +22,7 @@
      <application android:debuggable="true" />
      
     </manifest>
-    <gap:plugin name="org.apache.cordova.media"/>
+    <!--<gap:plugin name="org.apache.cordova.media"/> -->
     <icon src="android/ldpi.png" platform="android" qualifier="ldpi" />
     <icon src="android/mdpi.png" platform="android" qualifier="mdpi" />
     <icon src="android/hdpi.png" platform="android" qualifier="hdpi" />
